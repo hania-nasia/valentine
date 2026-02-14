@@ -21,7 +21,7 @@ yesBtn.addEventListener('click', () => {
 const originalX = noBtn.offsetLeft;
 const originalY = noBtn.offsetTop;
 
-container/addEventListener('mousemove'), (e) => {
+container.addEventListener('mousemove'), (e) => {
   const mouseX = e.clientX;
   const mouseY = e.clientY;
 
@@ -29,7 +29,7 @@ container/addEventListener('mousemove'), (e) => {
   const btnX = rect.left + rect.width /2;
   const btnY = rect.top + rect.height /2;
 
-  const distance = Math.hypot(mouseX - btnX, mouseY = btnY);
+  const distance = Math.hypot(mouseX - btnX, mouseY - btnY);
 
   if (distance < 100) {
     const maxX = container.clientWidth - noBtn.offsetWidth;
