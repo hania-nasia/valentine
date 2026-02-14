@@ -1,36 +1,35 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Valentine Website</title>
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <title>Valentine Website</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-
-  <div id="envelope-page" style = "text-align: centre;">
-    <img src="images/envelopeclose.jpeg" alt="Envelope">
-    <p>You have received a letter</p>
-    <button id="open-envelope">Open</button>
-  </div>
-
-  <div id="letter-page" style="display:none;">
-    <img src="images/envelopeopen.png" alt="Letter">
-
-  <div id="button-container" style="position: relative; display: inline-block; margin-top: 20px;">
-    <button id="yes-btn">Yes</button>
-    <button id="no-btn">No</button>
-  </div>
-
-  <div id="game-page" style="display:none;">
-    <div id="game">
-      <div id="player"></div>
+    <div id="envelope-page" style="text-align: center;">
+        <img src="images/envelopeclose.jpeg" alt="Envelope">
+        <p>You have received a letter</p>
+        <button id="open-envelope">Open</button>
     </div>
-  </div>
 
-  <div id="final-page" style="display:none;">
-    <h1>Happy Valentine’s Day! ❤️</h1>
-  </div>
+    <div id="letter-page" style="display:none;">
+        <img src="images/envelopeopen.png" alt="Letter">
+        <div id="button-container" style="position: relative; display: inline-block; margin-top: 20px; width: 300px; height: 100px;">
+            <button id="yes-btn">Yes</button>
+            <button id="no-btn">No</button>
+        </div>
+    </div>
 
-  <script src="script.js"></script>
+    <div id="game-page" style="display:none;">
+        <div id="game">
+            <div id="player"></div>
+        </div>
+    </div>
+
+    <div id="final-page" style="display:none;">
+        <h1>Happy Valentine’s Day! ❤️</h1>
+    </div>
+
+    <script src="script.js"></script>
 </body>
 </html>
