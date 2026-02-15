@@ -19,7 +19,7 @@ button { padding: 15px 30px;
                      height: 120px;
                   }
 
-#no-btn { position: relative; transition: all 0.2s ease; }
+#no-btn { position: absolute; transition: all 0.2s ease; }
 
 #letter-page { text-align: center;
               position: relative;
