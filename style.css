@@ -1,5 +1,8 @@
 body { text-align: center; font-family: Arial; background: #ffe6f0; }
 
+.hidden {display: none;
+        }
+
 img { max-width: 40%; margin: 20px 0; }
 
 button { padding: 15px 30px; 
