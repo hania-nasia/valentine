@@ -7,6 +7,10 @@ const yesBtn = document.getElementById("yes-btn");
 const noBtn = document.getElementById("no-btn");
 const container = document.getElementById("button-container");
 
+// 🔥 Speed variables
+let moveDistance = 120;   // starting jump distance
+const maxSpeed = 350;     // prevents it from becoming impossible
+
 openBtn.addEventListener("click", () => {
     envelopePage.style.display = "none";
     letterPage.style.display = "block";
@@ -20,7 +24,6 @@ yesBtn.addEventListener("click", () => {
 container.addEventListener("mousemove", (e) => {
     
     const rect = noBtn.getBoundingClientRect();
-    const containerRect = container.getBoundingClientRect();
     
     const btnX = rect.left + rect.width / 2;
     const btnY = rect.top + rect.height / 2;
@@ -34,8 +37,6 @@ container.addEventListener("mousemove", (e) => {
 
         const angle = Math.atan2(btnY - mouseY, btnX - mouseX);
 
-        const moveDistance = 150;
-
         let newX = noBtn.offsetLeft + Math.cos(angle) * moveDistance;
         let newY = noBtn.offsetTop + Math.sin(angle) * moveDistance;
         
@@ -47,5 +48,10 @@ container.addEventListener("mousemove", (e) => {
 
         noBtn.style.left = newX + "px";
         noBtn.style.top = newY + "px";
+
+        // 🔥 Gradually increase speed (smooth growth)
+        if (moveDistance < maxSpeed) {
+            moveDistance *= 1.07;   // increase by 7% each move
+        }
     }
 });
