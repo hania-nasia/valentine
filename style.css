@@ -11,15 +11,26 @@ button { padding: 15px 30px;
         border-radius: 8px; }
 
 #button-container { position: relative;
-                   display: flex;
-                   justify-content: center;
-                   align-items: center;
-                   gap: 50px;
-                   margin-top: 30px;
-                     height: 120px;
+                   width: 400px;
+                   height: 200px;
+                   margin: 30px auto;
                   }
 
-#no-btn { position: absolute; transition: all 0.2s ease; }
+#yes-btn, no-btn { position: absolute; 
+                  padding: 15px 30px;
+                  font-size: 18px;
+                  cursor: pointer; 
+                  border-radius: 8px;
+                 }
+
+#yes-btn { left: 110px;
+          top: 80px;
+         }
+
+#no-btn { left: 220px;
+        top: 80px;
+         transition: all 0.2s ease;
+        }
 
 #letter-page { text-align: center;
               position: relative;
