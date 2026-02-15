@@ -7,25 +7,21 @@ const yesBtn = document.getElementById("yes-btn");
 const noBtn = document.getElementById("no-btn");
 const container = document.getElementById("button-container");
 
-// Open envelope
 openBtn.addEventListener("click", () => {
     envelopePage.style.display = "none";
     letterPage.style.display = "block";
 });
 
-// Yes button
 yesBtn.addEventListener("click", () => {
     letterPage.style.display = "none";
     gamePage.style.display = "block";
 });
 
-// Initialize No button position
 noBtn.style.left = noBtn.offsetLeft + "px";
 noBtn.style.top = noBtn.offsetTop + "px";
 let originalX = noBtn.offsetLeft;
 let originalY = noBtn.offsetTop;
 
-// Move No button when mouse gets close
 container.addEventListener("mousemove", (e) => {
     
     const rect = noBtn.getBoundingClientRect();
@@ -38,10 +34,10 @@ container.addEventListener("mousemove", (e) => {
     const distance = Math.hypot(mouseX - btnX, mouseY - btnY);
 
     if (distance < 100) {
-        const containerRect = container.getBoundingClientRect();
         
-        const maxX = window.innerWidth - noBtn.offsetWidth;
-        const maxY = window.innerHeight - noBtn.offsetHeight;
+        const containerRect = container.getBoundingClientRect();
+        const maxX = containerRect.width - noBtn.offsetWidth;
+        const maxY = containerRect.height - noBtn.offsetHeight;
         
         const newX = Math.random() * maxX;
         const newY = Math.random() * maxY;
