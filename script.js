@@ -26,7 +26,7 @@ let originalX = noBtn.offsetLeft;
 let originalY = noBtn.offsetTop;
 
 // Move No button when mouse gets close
-container.addEventListener('mousemove", (e) => {
+container.addEventListener("mousemove", (e) => {
     
     const rect = noBtn.getBoundingClientRect();
     const btnX = rect.left + rect.width / 2;
