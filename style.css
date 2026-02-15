@@ -40,70 +40,55 @@ button { padding: 15px 30px;
 
 #crash-page {
     position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: black;
+    inset: 0;
+    background: #ffe6f0; /* match site */
     display: flex;
     justify-content: center;
     align-items: center;
-    overflow: hidden;
+    flex-direction: column;
     z-index: 9999;
+    overflow: hidden;
 }
 
-#glitch-text {
-    color: white;
-    font-size: 60px;
-    font-family: Arial, sans-serif;
+/* Loading UI */
+#loading-container {
+    text-align: center;
+}
+
+#loading-bar {
+    width: 300px;
+    height: 20px;
+    border: 2px solid #ff4da6;
+    margin: 15px auto;
     position: relative;
-    animation: glitch 0.2s infinite;
+    overflow: hidden;
 }
 
-/* RGB split layers */
-#glitch-text::before,
-#glitch-text::after {
-    content: "SYSTEM FAILURE";
+#loading-progress {
+    height: 100%;
+    width: 0%;
+    background: #ff4da6;
+    transition: width 0.2s ease;
+}
+
+#loading-percent {
+    font-weight: bold;
+    color: #ff4da6;
+}
+
+/* Glitch overlay bars */
+.glitch-overlay {
     position: absolute;
-    left: 0;
-    top: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    animation: glitchFlash 0.15s infinite;
 }
 
-#glitch-text::before {
-    color: red;
-    animation: glitchTop 0.2s infinite;
+@keyframes glitchFlash {
+    0% { background: transparent; }
+    25% { background: rgba(255, 0, 128, 0.1); }
+    50% { background: rgba(255, 255, 255, 0.2); }
+    75% { background: rgba(255, 0, 128, 0.15); }
+    100% { background: transparent; }
 }
-
-#glitch-text::after {
-    color: cyan;
-    animation: glitchBottom 0.2s infinite;
-}
-
-@keyframes glitch {
-    0% { transform: translate(0); }
-    20% { transform: translate(-3px, 3px); }
-    40% { transform: translate(-3px, -3px); }
-    60% { transform: translate(3px, 3px); }
-    80% { transform: translate(3px, -3px); }
-    100% { transform: translate(0); }
-}
-
-@keyframes glitchTop {
-    0% { transform: translate(-2px, -2px); }
-    50% { transform: translate(2px, 2px); }
-    100% { transform: translate(-2px, -2px); }
-}
-
-@keyframes glitchBottom {
-    0% { transform: translate(2px, 2px); }
-    50% { transform: translate(-2px, -2px); }
-    100% { transform: translate(2px, 2px); }
-}
-
-#game { width:300px; height:300px; 
-       background:#222; 
-       margin:20px auto; 
-       position:relative; 
-       border:2px solid white; }
-
-#player { width:20px; height:20px; background:yellow; position:absolute; top:0; left:0; }
