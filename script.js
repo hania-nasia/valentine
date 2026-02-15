@@ -17,11 +17,6 @@ yesBtn.addEventListener("click", () => {
     gamePage.style.display = "block";
 });
 
-noBtn.style.left = noBtn.offsetLeft + "px";
-noBtn.style.top = noBtn.offsetTop + "px";
-let originalX = noBtn.offsetLeft;
-let originalY = noBtn.offsetTop;
-
 container.addEventListener("mousemove", (e) => {
     
     const rect = noBtn.getBoundingClientRect();
@@ -35,14 +30,12 @@ container.addEventListener("mousemove", (e) => {
 
     if (distance < 100) {
         
-        const containerRect = container.getBoundingClientRect();
-        const maxX = containerRect.width - noBtn.offsetWidth;
-        const maxY = containerRect.height - noBtn.offsetHeight;
+        const maxX = container.clientWidth - noBtn.offsetWidth;
+        const maxY = container.clientHeight - noBtn.offsetHeight;
         
         const newX = Math.random() * maxX;
         const newY = Math.random() * maxY;
 
-        noBtn.style.position = "absolute";
         noBtn.style.left = newX + 'px';
         noBtn.style.top = newY + 'px';
     }
