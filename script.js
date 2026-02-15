@@ -1,6 +1,8 @@
 const envelopePage = document.getElementById("envelope-page");
 const letterPage = document.getElementById("letter-page");
 const gamePage = document.getElementById("game-page");
+const crashPage = document.getElementById("crash-page");
+const glitchText = document.getElementById("glitch-text");
 const finalPage = document.getElementById("final-page");
 const openBtn = document.getElementById("open-envelope");
 const yesBtn = document.getElementById("yes-btn");
@@ -18,7 +20,9 @@ openBtn.addEventListener("click", () => {
 
 yesBtn.addEventListener("click", () => {
     letterPage.style.display = "none";
-    gamePage.style.display = "block";
+    crashPage.classList.remove("hidden");
+
+    startGlitch();
 });
 
 container.addEventListener("mousemove", (e) => {
@@ -54,4 +58,35 @@ container.addEventListener("mousemove", (e) => {
             moveDistance *= 1.01;   // increase by 7% each move
         }
     }
+    
 });
+function startGlitch() {
+
+    const messages = [
+        "SYSTEM FAILURE",
+        "ERROR 404: LOVE NOT FOUND",
+        "OVERRIDE DETECTED",
+        "EMOTIONAL BREACH",
+        "CRITICAL MALFUNCTION"
+    ];
+
+    let count = 0;
+
+    const glitchInterval = setInterval(() => {
+        glitchText.textContent = messages[Math.floor(Math.random() * messages.length)];
+        count++;
+
+        // random screen flash
+        document.body.style.backgroundColor =
+            Math.random() > 0.5 ? "black" : "#111";
+
+        if (count > 25) { // how long glitch lasts
+            clearInterval(glitchInterval);
+
+            crashPage.classList.add("hidden");
+            document.body.style.backgroundColor = "#ffe6f0";
+            finalPage.style.display = "block";
+        }
+
+    }, 100);
+}
