@@ -29,7 +29,7 @@ button { padding: 15px 30px;
 
 #no-btn { left: 220px;
         top: 80px;
-         transition: all 0.2s ease;
+         transition: all 0.2s;
         }
 
 #letter-page { text-align: center;
