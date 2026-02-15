@@ -51,7 +51,7 @@ container.addEventListener("mousemove", (e) => {
 
         // 🔥 Gradually increase speed (smooth growth)
         if (moveDistance < maxSpeed) {
-            moveDistance *= 1.07;   // increase by 7% each move
+            moveDistance *= 1.05;   // increase by 7% each move
         }
     }
 });
