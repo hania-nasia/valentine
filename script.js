@@ -27,18 +27,24 @@ let originalY = noBtn.offsetTop;
 
 // Move No button when mouse gets close
 container.addEventListener('mousemove', (e) => {
+    
     const rect = noBtn.getBoundingClientRect();
-    const mouseX = e.clientX;
-    const mouseY = e.clientY;
     const btnX = rect.left + rect.width / 2;
     const btnY = rect.top + rect.height / 2;
+    
+    const mouseX = e.clientX;
+    const mouseY = e.clientY;
+    
     const distance = Math.hypot(mouseX - btnX, mouseY - btnY);
 
     if (distance < 100) {
-        const maxX = container.clientWidth - noBtn.offsetWidth;
-        const maxY = container.clientHeight - noBtn.offsetHeight;
+        const maxX = window.innerWidth - noBtn.offsetWidth;
+        const maxY = window.innerHeight - noBtn.offsetHeight;
+        
         const newX = Math.random() * maxX;
         const newY = Math.random() * maxY;
+
+        noBtn.style.position = "absolute";
         noBtn.style.left = newX + 'px';
         noBtn.style.top = newY + 'px';
     }
