@@ -20,6 +20,8 @@ yesBtn.addEventListener("click", () => {
 container.addEventListener("mousemove", (e) => {
     
     const rect = noBtn.getBoundingClientRect();
+    const containerRect = container.getBoundingClientRect();
+    
     const btnX = rect.left + rect.width / 2;
     const btnY = rect.top + rect.height / 2;
     
@@ -28,15 +30,22 @@ container.addEventListener("mousemove", (e) => {
     
     const distance = Math.hypot(mouseX - btnX, mouseY - btnY);
 
-    if (distance < 100) {
+    if (distance < 120) {
+
+        const angle = Math.atan2(btnY - mouseY, btnX - mouseX);
+
+        const moveDistance = 150;
+
+        let newX = noBtn.offsetLeft + Math.cos(angle) * moveDistance;
+        let newY = noBtn.offsetTop + Math.sin(angle) * moveDistance;
         
         const maxX = container.clientWidth - noBtn.offsetWidth;
         const maxY = container.clientHeight - noBtn.offsetHeight;
         
-        const newX = Math.random() * maxX;
-        const newY = Math.random() * maxY;
+        newX = Math.max(0, Math.min(newX, maxX));
+        newY = Math.max(0, Math.min(newY, maxY));
 
-        noBtn.style.left = newX + 'px';
-        noBtn.style.top = newY + 'px';
+        noBtn.style.left = newX + "px";
+        noBtn.style.top = newY + "px";
     }
 });
