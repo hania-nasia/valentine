@@ -2,7 +2,6 @@ const envelopePage = document.getElementById("envelope-page");
 const letterPage = document.getElementById("letter-page");
 const gamePage = document.getElementById("game-page");
 const crashPage = document.getElementById("crash-page");
-const glitchText = document.getElementById("glitch-text");
 const finalPage = document.getElementById("final-page");
 const openBtn = document.getElementById("open-envelope");
 const yesBtn = document.getElementById("yes-btn");
@@ -57,36 +56,55 @@ container.addEventListener("mousemove", (e) => {
         if (moveDistance < maxSpeed) {
             moveDistance *= 1.01;   // increase by 7% each move
         }
-    }
-    
-});
+    });
+
 function startGlitch() {
 
-    const messages = [
-        "SYSTEM FAILURE",
-        "ERROR 404: LOVE NOT FOUND",
-        "OVERRIDE DETECTED",
-        "EMOTIONAL BREACH",
-        "CRITICAL MALFUNCTION"
-    ];
+    const progressBar = document.getElementById("loading-progress");
+    const percentText = document.getElementById("loading-percent");
 
-    let count = 0;
+    let percent = 0;
 
-    const glitchInterval = setInterval(() => {
-        glitchText.textContent = messages[Math.floor(Math.random() * messages.length)];
-        count++;
+    const loadInterval = setInterval(() => {
 
-        // random screen flash
-        document.body.style.backgroundColor =
-            Math.random() > 0.5 ? "black" : "#111";
+        if (percent < 99) {
+            percent += Math.random() * 8;
+            percent = Math.min(percent, 99);
 
-        if (count > 25) { // how long glitch lasts
-            clearInterval(glitchInterval);
-
-            crashPage.classList.add("hidden");
-            document.body.style.backgroundColor = "#ffe6f0";
-            finalPage.style.display = "block";
+            progressBar.style.width = percent + "%";
+            percentText.textContent = Math.floor(percent) + "%";
+        } 
+        else {
+            clearInterval(loadInterval);
+            triggerCrashEffect();
         }
 
-    }, 100);
+    }, 150);
+}
+
+
+function triggerCrashEffect() {
+
+    const overlay = document.createElement("div");
+    overlay.classList.add("glitch-overlay");
+    crashPage.appendChild(overlay);
+
+    let shakeAmount = 0;
+
+    const shakeInterval = setInterval(() => {
+
+        shakeAmount += 2;
+
+        crashPage.style.transform =
+            `translate(${Math.random() * shakeAmount - shakeAmount/2}px,
+                       ${Math.random() * shakeAmount - shakeAmount/2}px)`;
+
+    }, 50);
+
+    setTimeout(() => {
+        clearInterval(shakeInterval);
+        crashPage.style.transform = "translate(0,0)";
+        crashPage.classList.add("hidden");
+        gamePage.classList.remove("hidden");
+    }, 1500);
 }
