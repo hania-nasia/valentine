@@ -182,9 +182,10 @@ const maze = [
 
 const gameContainer = document.getElementById("game");
 const tileSize = 60;  
-const wallThickness = 6;       // thinner wall
-const spriteSize = 40;          // Player & enemy
-const kissSize = 28;            // Kisses in maze
+const wallThickness = 6; // thinner, continuous walls
+const spriteSize = 40;
+const kissSize = 28;
+
 let player, enemy;
 let playerEl, enemyEl;
 let kisses = [];
@@ -223,9 +224,6 @@ function createUI() {
   uiContainer.style.alignItems = "center";  // aligns score & timer properly
   uiContainer.style.width = maze[0].length * tileSize + "px";
   uiContainer.style.margin = "0 auto 10px auto";
-  uiContainer.style.fontSize = "24px";
-  uiContainer.style.fontWeight = "bold";
-  uiContainer.style.color = "red";
 
   // Score
   scoreEl = document.createElement("div");
@@ -234,9 +232,8 @@ function createUI() {
 
   const kissIcon = document.createElement("img");
   kissIcon.src = "images/kiss.png";
-  kissIcon.style.width = "35px";  // bigger & proportional
-  kissIcon.style.height = "35px";
-  kissIcon.style.objectFit = "contain";
+  kissIcon.style.height = "30px"; // proportional height
+  kissIcon.style.width = "auto";  // maintain proportions
   kissIcon.style.marginRight = "5px";
   scoreEl.appendChild(kissIcon);
 
@@ -268,28 +265,24 @@ function drawMaze() {
   const mazeWrapper = document.getElementById("maze-wrapper");
   maze.forEach((row, y) => {
     row.forEach((cell, x) => {
-      if (cell === 1 || cell === 0) {
-        const tile = document.createElement("div");
-        tile.style.position = "absolute";
-        tile.style.width = tileSize + "px";
-        tile.style.height = tileSize + "px";
-        tile.style.left = x * tileSize + "px";
-        tile.style.top = y * tileSize + "px";
-        if (cell === 1) {
-          tile.style.background = "#ff4da6";
-          tile.style.boxSizing = "border-box";
-          tile.style.border = `${wallThickness}px solid #ffe6f0`; // thinner wall
-        }
-        mazeWrapper.appendChild(tile);
+      if (cell === 1) {
+        const wall = document.createElement("div");
+        wall.style.position = "absolute";
+        wall.style.left = x * tileSize + "px";
+        wall.style.top = y * tileSize + "px";
+        wall.style.width = tileSize + "px";
+        wall.style.height = tileSize + "px";
+        wall.style.background = "#ff4da6";
+        mazeWrapper.appendChild(wall);
       }
       if (cell === 2) {
         const finishImg = document.createElement("img");
         finishImg.src = "images/me.png";
         finishImg.style.position = "absolute";
-        finishImg.style.width = tileSize - wallThickness*2 + "px"; // fits inside walls
-        finishImg.style.height = tileSize - wallThickness*2 + "px";
-        finishImg.style.left = x * tileSize + wallThickness + "px";
-        finishImg.style.top = y * tileSize + wallThickness + "px";
+        finishImg.style.width = tileSize + "px";
+        finishImg.style.height = tileSize + "px";
+        finishImg.style.left = x * tileSize + "px";
+        finishImg.style.top = y * tileSize + "px";
         mazeWrapper.appendChild(finishImg);
       }
     });
@@ -337,8 +330,8 @@ function placeKisses() {
         const kiss = document.createElement("img");
         kiss.src = "images/kiss.png";
         kiss.style.position = "absolute";
-        kiss.style.width = kissSize + "px";   // smaller, fits maze
-        kiss.style.height = kissSize + "px";
+        kiss.style.height = kissSize + "px";   // proportional
+        kiss.style.width = "auto";
         kiss.style.left = x * tileSize + (tileSize - kissSize)/2 + "px";
         kiss.style.top = y * tileSize + (tileSize - kissSize)/2 + "px";
         mazeWrapper.appendChild(kiss);
@@ -367,7 +360,6 @@ document.addEventListener("keydown", (e) => {
 
 // ================= COLLISIONS =================
 function checkCollisions() {
-  // Kiss collection
   kisses = kisses.filter(kiss => {
     if (kiss.x === player.x && kiss.y === player.y) {
       kiss.el.remove();
@@ -380,7 +372,6 @@ function checkCollisions() {
     return true;
   });
 
-  // Win condition only if all kisses collected
   if (maze[player.y][player.x] === 2 && kisses.length === 0) {
     playerEl.src = "images/us.png";
     clearInterval(enemyInterval);
@@ -388,10 +379,9 @@ function checkCollisions() {
     setTimeout(() => {
       gamePage.classList.add("hidden");
       finalPage.classList.remove("hidden");
-    }, 1500); // 1.5s
+    }, 1500);
   }
 
-  // Enemy collision
   if (enemy.x === player.x && enemy.y === player.y) {
     clearInterval(enemyInterval);
     clearInterval(gameTimer);
