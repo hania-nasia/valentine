@@ -182,7 +182,8 @@ const maze = [
 
 const gameContainer = document.getElementById("game");
 const tileSize = 60;  
-const spriteSize = 40; 
+const spriteSize = 40;
+const kissSize = 30;
 let player, enemy;
 let playerEl, enemyEl;
 let kisses = [];
@@ -325,8 +326,8 @@ function placeKisses() {
                 const kiss = document.createElement("img");
                 kiss.src = "images/kiss.png";
                 kiss.style.position = "absolute";
-                kiss.style.width = spriteSize + "px";
-                kiss.style.height = spriteSize + "px";
+                kiss.style.width = kissSize + "px";
+                kiss.style.height = kissSize + "px";
                 kiss.style.left = x * tileSize + (tileSize - spriteSize)/2 + "px";
                 kiss.style.top = y * tileSize + (tileSize - spriteSize)/2 + "px";
                 mazeWrapper.appendChild(kiss);
