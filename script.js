@@ -63,7 +63,7 @@ container.addEventListener("mousemove", (e) => {
         noBtn.style.top = newY + "px";
 
         if (moveDistance < maxSpeed) {
-            moveDistance *= 1.01;
+            moveDistance *= 1.08;
         }
     }
 });
