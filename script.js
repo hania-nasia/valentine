@@ -182,7 +182,7 @@ const maze = [
 
 const gameContainer = document.getElementById("game");
 const tileSize = 60;  
-const wallThickness = 6; // thinner, continuous walls
+const wallThickness = 3; // much thinner
 const spriteSize = 40;
 const kissSize = 28;
 
@@ -232,8 +232,9 @@ function createUI() {
 
   const kissIcon = document.createElement("img");
   kissIcon.src = "images/kiss.png";
-  kissIcon.style.height = "30px"; // proportional height
-  kissIcon.style.width = "auto";  // maintain proportions
+  kissIcon.style.width = "auto";       // maintain proportions
+  kissIcon.style.height = "35px";      // scalable height
+  kissIcon.style.objectFit = "contain";
   kissIcon.style.marginRight = "5px";
   scoreEl.appendChild(kissIcon);
 
@@ -243,7 +244,7 @@ function createUI() {
 
   // Timer
   timerEl = document.createElement("div");
-  timerEl.textContent = `Time: ${timeLeft}s`;
+  timerEl.textContent = `Time: ${timeLeft}s`; // exact original format
 
   uiContainer.appendChild(scoreEl);
   uiContainer.appendChild(timerEl);
@@ -273,6 +274,8 @@ function drawMaze() {
         wall.style.width = tileSize + "px";
         wall.style.height = tileSize + "px";
         wall.style.background = "#ff4da6";
+        wall.style.boxSizing = "border-box";
+        wall.style.border = `${wallThickness}px solid #ffe6f0`; // thin continuous line
         mazeWrapper.appendChild(wall);
       }
       if (cell === 2) {
@@ -330,8 +333,8 @@ function placeKisses() {
         const kiss = document.createElement("img");
         kiss.src = "images/kiss.png";
         kiss.style.position = "absolute";
-        kiss.style.height = kissSize + "px";   // proportional
-        kiss.style.width = "auto";
+        kiss.style.height = kissSize + "px";
+        kiss.style.width = "auto";   // maintain proportions
         kiss.style.left = x * tileSize + (tileSize - kissSize)/2 + "px";
         kiss.style.top = y * tileSize + (tileSize - kissSize)/2 + "px";
         mazeWrapper.appendChild(kiss);
@@ -379,7 +382,7 @@ function checkCollisions() {
     setTimeout(() => {
       gamePage.classList.add("hidden");
       finalPage.classList.remove("hidden");
-    }, 1500);
+    }, 1500); // 1.5s
   }
 
   if (enemy.x === player.x && enemy.y === player.y) {
@@ -394,7 +397,7 @@ function updateScore() {
   scoreEl.querySelector("span").textContent = score;
 }
 
-// ================= ENEMY AI (BFS pathfinding) =================
+// ================= ENEMY AI =================
 function moveEnemyTowardsPlayer() {
   const queue = [{ x: enemy.x, y: enemy.y, path: [] }];
   const visited = Array(maze.length).fill(0).map(() => Array(maze[0].length).fill(false));
@@ -441,7 +444,7 @@ function startEnemy() {
 function startTimer() {
   gameTimer = setInterval(() => {
     timeLeft--;
-    timerEl.textContent = `Time: ${timeLeft}s`;
+    timerEl.textContent = `Time: ${timeLeft}s`; // exactly as original
     if (timeLeft <= 0) {
       clearInterval(gameTimer);
       clearInterval(enemyInterval);
