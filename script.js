@@ -9,8 +9,8 @@ const yesBtn = document.getElementById("yes-btn");
 const noBtn = document.getElementById("no-btn");
 const container = document.getElementById("button-container");
 
-let moveDistance = 120;
-const maxSpeed = 350;
+let moveDistance = 150;
+const maxSpeed = 1200;
 
 
 
