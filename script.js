@@ -161,5 +161,5 @@ function triggerCrashEffect() {
         overlay.remove();
         flash.remove();
 
-    }, 1300);
+    }, 5000);
 }
