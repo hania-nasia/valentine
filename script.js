@@ -164,7 +164,7 @@ function triggerCrashEffect() {
     }, 5000);
 }
 
-// ================= FULL PACMAN VALENTINE GAME =================
+// ================= FULL PACMAN VALENTINE GAME WITH SCORE & TIMER =================
 
 const maze = [
 [1,1,1,1,1,1,1,1,1,1,1,1,1,1],
@@ -176,7 +176,7 @@ const maze = [
 [1,1,1,0,1,0,1,1,0,1,1,1,0,1],
 [1,0,0,0,0,0,1,0,0,0,0,1,0,1],
 [1,0,1,1,1,0,1,0,1,1,0,1,0,1],
-[1,0,0,0,1,0,0,0,0,1,0,0,0,2], // finish = 2
+[1,0,0,0,1,0,0,0,0,1,0,0,0,2],
 [1,1,1,1,1,1,1,1,1,1,1,1,1,1],
 ];
 
@@ -245,14 +245,19 @@ function createUI() {
 
     gameContainer.appendChild(uiContainer);
 
-    // Center maze
-    gameContainer.style.position = "relative";
-    gameContainer.style.width = maze[0].length * tileSize + "px";
-    gameContainer.style.margin = "20px auto";
+    // Center maze below UI
+    const mazeWrapper = document.createElement("div");
+    mazeWrapper.id = "maze-wrapper";
+    mazeWrapper.style.position = "relative";
+    mazeWrapper.style.width = maze[0].length * tileSize + "px";
+    mazeWrapper.style.height = maze.length * tileSize + "px";
+    mazeWrapper.style.margin = "0 auto";
+    gameContainer.appendChild(mazeWrapper);
 }
 
 // ================= MAZE =================
 function drawMaze() {
+    const mazeWrapper = document.getElementById("maze-wrapper");
     maze.forEach((row, y) => {
         row.forEach((cell, x) => {
             if (cell === 1 || cell === 0) {
@@ -263,7 +268,7 @@ function drawMaze() {
                 tile.style.left = x * tileSize + "px";
                 tile.style.top = y * tileSize + "px";
                 if (cell === 1) tile.style.background = "#ff4da6";
-                gameContainer.appendChild(tile);
+                mazeWrapper.appendChild(tile);
             }
             if (cell === 2) {
                 const finishImg = document.createElement("img");
@@ -273,7 +278,7 @@ function drawMaze() {
                 finishImg.style.height = tileSize + "px";
                 finishImg.style.left = x * tileSize + "px";
                 finishImg.style.top = y * tileSize + "px";
-                gameContainer.appendChild(finishImg);
+                mazeWrapper.appendChild(finishImg);
             }
         });
     });
@@ -288,7 +293,7 @@ function createPlayer() {
     playerEl.style.width = spriteSize + "px";
     playerEl.style.height = spriteSize + "px";
     playerEl.style.transition = "0.1s";
-    gameContainer.appendChild(playerEl);
+    document.getElementById("maze-wrapper").appendChild(playerEl);
 }
 function updatePlayer() {
     playerEl.style.left = player.x * tileSize + (tileSize - spriteSize)/2 + "px";
@@ -304,7 +309,7 @@ function createEnemy() {
     enemyEl.style.height = spriteSize + "px";
     enemyEl.style.background = "black";
     enemyEl.style.borderRadius = "50%";
-    gameContainer.appendChild(enemyEl);
+    document.getElementById("maze-wrapper").appendChild(enemyEl);
 }
 function updateEnemy() {
     enemyEl.style.left = enemy.x * tileSize + (tileSize - spriteSize)/2 + "px";
@@ -313,6 +318,7 @@ function updateEnemy() {
 
 // ================= KISSES =================
 function placeKisses() {
+    const mazeWrapper = document.getElementById("maze-wrapper");
     maze.forEach((row, y) => {
         row.forEach((cell, x) => {
             if (cell === 0 && Math.random() < 0.2) {
@@ -323,7 +329,7 @@ function placeKisses() {
                 kiss.style.height = spriteSize + "px";
                 kiss.style.left = x * tileSize + (tileSize - spriteSize)/2 + "px";
                 kiss.style.top = y * tileSize + (tileSize - spriteSize)/2 + "px";
-                gameContainer.appendChild(kiss);
+                mazeWrapper.appendChild(kiss);
                 kisses.push({ x, y, el: kiss });
             }
         });
@@ -370,7 +376,7 @@ function checkCollisions() {
         setTimeout(() => {
             gamePage.classList.add("hidden");
             finalPage.classList.remove("hidden");
-        }, 2500); // 2.5 seconds
+        }, 1500); // show "us" 2.5s
     }
 
     // Enemy collision
@@ -425,7 +431,7 @@ function startEnemy() {
         moveEnemyTowardsPlayer();
         updateEnemy();
         checkCollisions();
-        // speed up enemy over time
+        // gradually speed up
         if (enemySpeed > 200) {
             enemySpeed -= 1;
             startEnemy();
@@ -451,3 +457,4 @@ const observer = new MutationObserver(() => {
     if (!gamePage.classList.contains("hidden")) initGame();
 });
 observer.observe(gamePage, { attributes: true });
+
