@@ -163,3 +163,213 @@ function triggerCrashEffect() {
 
     }, 5000);
 }
+
+// ================= PACMAN VALENTINE GAME =================
+
+// Maze Layout
+// 1 = wall
+// 0 = path
+// 2 = finish tile
+
+const maze = [
+  [1,1,1,1,1,1,1,1,1,1],
+  [1,0,0,0,1,0,0,0,0,1],
+  [1,0,1,0,1,0,1,1,0,1],
+  [1,0,1,0,0,0,0,1,0,1],
+  [1,0,1,1,1,1,0,1,0,1],
+  [1,0,0,0,0,1,0,0,0,1],
+  [1,1,1,1,0,1,1,1,0,1],
+  [1,0,0,1,0,0,0,1,0,2],
+  [1,1,1,1,1,1,1,1,1,1]
+];
+
+const game = document.getElementById("game");
+const tileSize = 40;
+
+let player = { x: 1, y: 1 };
+let enemy = { x: 8, y: 1 };
+let kisses = [];
+
+let playerEl;
+let enemyEl;
+
+function initGame() {
+
+    game.innerHTML = "";
+    kisses = [];
+
+    drawMaze();
+    placeKisses();
+    createPlayer();
+    createEnemy();
+    updatePlayer();
+    updateEnemy();
+}
+
+function drawMaze() {
+
+    maze.forEach((row, y) => {
+        row.forEach((cell, x) => {
+
+            const tile = document.createElement("div");
+            tile.style.position = "absolute";
+            tile.style.width = tileSize + "px";
+            tile.style.height = tileSize + "px";
+            tile.style.left = x * tileSize + "px";
+            tile.style.top = y * tileSize + "px";
+
+            if (cell === 1) tile.style.background = "#ff4da6";
+            if (cell === 2) tile.style.background = "gold";
+
+            game.appendChild(tile);
+        });
+    });
+
+    game.style.position = "relative";
+    game.style.width = maze[0].length * tileSize + "px";
+    game.style.height = maze.length * tileSize + "px";
+    game.style.margin = "0 auto";
+}
+
+function createPlayer() {
+
+    player = { x: 1, y: 1 };
+
+    playerEl = document.createElement("img");
+    playerEl.src = "images/player.png"; // your character image
+    playerEl.style.position = "absolute";
+    playerEl.style.width = tileSize + "px";
+    playerEl.style.height = tileSize + "px";
+
+    game.appendChild(playerEl);
+}
+
+function createEnemy() {
+
+    enemy = { x: 8, y: 1 };
+
+    enemyEl = document.createElement("div");
+    enemyEl.style.position = "absolute";
+    enemyEl.style.width = tileSize + "px";
+    enemyEl.style.height = tileSize + "px";
+    enemyEl.style.background = "black";
+    enemyEl.style.borderRadius = "50%";
+
+    game.appendChild(enemyEl);
+}
+
+function placeKisses() {
+
+    maze.forEach((row, y) => {
+        row.forEach((cell, x) => {
+            if (cell === 0 && Math.random() < 0.25) {
+
+                const kiss = document.createElement("img");
+                kiss.src = "images/kiss.png"; // your kiss image
+                kiss.style.position = "absolute";
+                kiss.style.width = tileSize + "px";
+                kiss.style.height = tileSize + "px";
+                kiss.style.left = x * tileSize + "px";
+                kiss.style.top = y * tileSize + "px";
+
+                game.appendChild(kiss);
+
+                kisses.push({ x, y, el: kiss });
+            }
+        });
+    });
+}
+
+function updatePlayer() {
+    playerEl.style.left = player.x * tileSize + "px";
+    playerEl.style.top = player.y * tileSize + "px";
+}
+
+function updateEnemy() {
+    enemyEl.style.left = enemy.x * tileSize + "px";
+    enemyEl.style.top = enemy.y * tileSize + "px";
+}
+
+document.addEventListener("keydown", (e) => {
+
+    if (gamePage.classList.contains("hidden")) return;
+
+    let newX = player.x;
+    let newY = player.y;
+
+    if (e.key === "ArrowUp") newY--;
+    if (e.key === "ArrowDown") newY++;
+    if (e.key === "ArrowLeft") newX--;
+    if (e.key === "ArrowRight") newX++;
+
+    if (maze[newY][newX] !== 1) {
+        player.x = newX;
+        player.y = newY;
+        updatePlayer();
+        checkCollisions();
+    }
+});
+
+function checkCollisions() {
+
+    // Collect kisses
+    kisses = kisses.filter(kiss => {
+        if (kiss.x === player.x && kiss.y === player.y) {
+            kiss.el.remove();
+            return false;
+        }
+        return true;
+    });
+
+    // Win condition
+    if (maze[player.y][player.x] === 2) {
+        alert("You reached the end 💖");
+        gamePage.classList.add("hidden");
+        finalPage.classList.remove("hidden");
+    }
+
+    // Enemy collision
+    if (enemy.x === player.x && enemy.y === player.y) {
+        alert("You got caught 😭 Restarting...");
+        initGame();
+    }
+}
+
+// Enemy random movement
+setInterval(() => {
+
+    if (gamePage.classList.contains("hidden")) return;
+
+    const directions = [
+        {x:0,y:-1},
+        {x:0,y:1},
+        {x:-1,y:0},
+        {x:1,y:0}
+    ];
+
+    const move = directions[Math.floor(Math.random() * directions.length)];
+
+    const newX = enemy.x + move.x;
+    const newY = enemy.y + move.y;
+
+    if (maze[newY][newX] !== 1) {
+        enemy.x = newX;
+        enemy.y = newY;
+        updateEnemy();
+    }
+
+    if (enemy.x === player.x && enemy.y === player.y) {
+        alert("You got caught 😭 Restarting...");
+        initGame();
+    }
+
+}, 400);
+
+// Start game when crash ends
+const observer = new MutationObserver(() => {
+    if (!gamePage.classList.contains("hidden")) {
+        initGame();
+    }
+});
+
+observer.observe(gamePage, { attributes: true });
