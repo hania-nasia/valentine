@@ -164,46 +164,50 @@ function triggerCrashEffect() {
     }, 5000);
 }
 
-// ================= PACMAN VALENTINE GAME =================
+// ================= PACMAN VALENTINE GAME (UPGRADED) =================
 
-// Maze Layout
+// Bigger, fully connected maze
 // 1 = wall
 // 0 = path
-// 2 = finish tile
+// 2 = finish
 
 const maze = [
-  [1,1,1,1,1,1,1,1,1,1],
-  [1,0,0,0,1,0,0,0,0,1],
-  [1,0,1,0,1,0,1,1,0,1],
-  [1,0,1,0,0,0,0,1,0,1],
-  [1,0,1,1,1,1,0,1,0,1],
-  [1,0,0,0,0,1,0,0,0,1],
-  [1,1,1,1,0,1,1,1,0,1],
-  [1,0,0,1,0,0,0,1,0,2],
-  [1,1,1,1,1,1,1,1,1,1]
+[1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+[1,0,0,0,0,1,0,0,0,0,0,0,0,1],
+[1,0,1,1,0,1,0,1,1,1,1,1,0,1],
+[1,0,1,0,0,0,0,0,0,0,0,1,0,1],
+[1,0,1,0,1,1,1,1,1,1,0,1,0,1],
+[1,0,0,0,1,0,0,0,0,1,0,0,0,1],
+[1,1,1,0,1,0,1,1,0,1,1,1,0,1],
+[1,0,0,0,0,0,1,0,0,0,0,1,0,1],
+[1,0,1,1,1,0,1,0,1,1,0,1,0,1],
+[1,0,0,0,1,0,0,0,0,1,0,0,0,2],
+[1,1,1,1,1,1,1,1,1,1,1,1,1,1],
 ];
 
 const game = document.getElementById("game");
-const tileSize = 40;
+const tileSize = 50;
+const spriteSize = 36; // keeps sprites inside tiles
 
-let player = { x: 1, y: 1 };
-let enemy = { x: 8, y: 1 };
+let player, enemy;
 let kisses = [];
-
-let playerEl;
-let enemyEl;
+let playerEl, enemyEl;
+let enemySpeed = 500;
+let enemyInterval;
 
 function initGame() {
 
     game.innerHTML = "";
     kisses = [];
+    enemySpeed = 500;
 
     drawMaze();
-    placeKisses();
     createPlayer();
     createEnemy();
+    placeKisses();
     updatePlayer();
     updateEnemy();
+    startEnemy();
 }
 
 function drawMaze() {
@@ -236,22 +240,23 @@ function createPlayer() {
     player = { x: 1, y: 1 };
 
     playerEl = document.createElement("img");
-    playerEl.src = "images/player.png"; // your character image
+    playerEl.src = "images/player.png";
     playerEl.style.position = "absolute";
-    playerEl.style.width = tileSize + "px";
-    playerEl.style.height = tileSize + "px";
+    playerEl.style.width = spriteSize + "px";
+    playerEl.style.height = spriteSize + "px";
+    playerEl.style.transition = "0.1s";
 
     game.appendChild(playerEl);
 }
 
 function createEnemy() {
 
-    enemy = { x: 8, y: 1 };
+    enemy = { x: 12, y: 1 };
 
     enemyEl = document.createElement("div");
     enemyEl.style.position = "absolute";
-    enemyEl.style.width = tileSize + "px";
-    enemyEl.style.height = tileSize + "px";
+    enemyEl.style.width = spriteSize + "px";
+    enemyEl.style.height = spriteSize + "px";
     enemyEl.style.background = "black";
     enemyEl.style.borderRadius = "50%";
 
@@ -262,15 +267,17 @@ function placeKisses() {
 
     maze.forEach((row, y) => {
         row.forEach((cell, x) => {
-            if (cell === 0 && Math.random() < 0.25) {
+
+            if (cell === 0 && Math.random() < 0.2) {
 
                 const kiss = document.createElement("img");
-                kiss.src = "images/kiss.png"; // your kiss image
+                kiss.src = "images/kiss.png";
                 kiss.style.position = "absolute";
-                kiss.style.width = tileSize + "px";
-                kiss.style.height = tileSize + "px";
-                kiss.style.left = x * tileSize + "px";
-                kiss.style.top = y * tileSize + "px";
+                kiss.style.width = spriteSize + "px";
+                kiss.style.height = spriteSize + "px";
+
+                kiss.style.left = x * tileSize + (tileSize - spriteSize)/2 + "px";
+                kiss.style.top = y * tileSize + (tileSize - spriteSize)/2 + "px";
 
                 game.appendChild(kiss);
 
@@ -281,13 +288,13 @@ function placeKisses() {
 }
 
 function updatePlayer() {
-    playerEl.style.left = player.x * tileSize + "px";
-    playerEl.style.top = player.y * tileSize + "px";
+    playerEl.style.left = player.x * tileSize + (tileSize - spriteSize)/2 + "px";
+    playerEl.style.top = player.y * tileSize + (tileSize - spriteSize)/2 + "px";
 }
 
 function updateEnemy() {
-    enemyEl.style.left = enemy.x * tileSize + "px";
-    enemyEl.style.top = enemy.y * tileSize + "px";
+    enemyEl.style.left = enemy.x * tileSize + (tileSize - spriteSize)/2 + "px";
+    enemyEl.style.top = enemy.y * tileSize + (tileSize - spriteSize)/2 + "px";
 }
 
 document.addEventListener("keydown", (e) => {
@@ -312,60 +319,81 @@ document.addEventListener("keydown", (e) => {
 
 function checkCollisions() {
 
-    // Collect kisses
     kisses = kisses.filter(kiss => {
+
         if (kiss.x === player.x && kiss.y === player.y) {
+
             kiss.el.remove();
+
+            // temporary kissed effect
+            playerEl.src = "images/player-kissed.png";
+
+            setTimeout(() => {
+                playerEl.src = "images/player.png";
+            }, 100);
+
             return false;
         }
         return true;
     });
 
-    // Win condition
+    // win
     if (maze[player.y][player.x] === 2) {
-        alert("You Win!");
-        gamePage.classList.add("hidden");
-        finalPage.classList.remove("hidden");
+
+        playerEl.src = "images/player-kissed.png";
+
+        setTimeout(() => {
+            gamePage.classList.add("hidden");
+            finalPage.classList.remove("hidden");
+        }, 600);
     }
 
-    // Enemy collision
+    // enemy collision
     if (enemy.x === player.x && enemy.y === player.y) {
-        alert("Oops... Restarting...");
+        clearInterval(enemyInterval);
         initGame();
     }
 }
 
-// Enemy random movement
-setInterval(() => {
+function startEnemy() {
 
-    if (gamePage.classList.contains("hidden")) return;
+    clearInterval(enemyInterval);
 
-    const directions = [
-        {x:0,y:-1},
-        {x:0,y:1},
-        {x:-1,y:0},
-        {x:1,y:0}
-    ];
+    enemyInterval = setInterval(() => {
 
-    const move = directions[Math.floor(Math.random() * directions.length)];
+        const directions = [
+            {x:0,y:-1},
+            {x:0,y:1},
+            {x:-1,y:0},
+            {x:1,y:0}
+        ];
 
-    const newX = enemy.x + move.x;
-    const newY = enemy.y + move.y;
+        const move = directions[Math.floor(Math.random() * directions.length)];
 
-    if (maze[newY][newX] !== 1) {
-        enemy.x = newX;
-        enemy.y = newY;
-        updateEnemy();
-    }
+        const newX = enemy.x + move.x;
+        const newY = enemy.y + move.y;
 
-    if (enemy.x === player.x && enemy.y === player.y) {
-        alert("Oops... Restarting...");
-        initGame();
-    }
+        if (maze[newY] && maze[newY][newX] !== 1) {
+            enemy.x = newX;
+            enemy.y = newY;
+            updateEnemy();
+        }
 
-}, 400);
+        if (enemy.x === player.x && enemy.y === player.y) {
+            clearInterval(enemyInterval);
+            initGame();
+        }
 
-// Start game when crash ends
+        // gradually speed up
+        if (enemySpeed > 150) {
+            enemySpeed -= 10;
+            startEnemy();
+        }
+
+    }, enemySpeed);
+}
+
+// Start game when page appears
 const observer = new MutationObserver(() => {
     if (!gamePage.classList.contains("hidden")) {
         initGame();
