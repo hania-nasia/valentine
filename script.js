@@ -182,9 +182,9 @@ const maze = [
 
 const gameContainer = document.getElementById("game");
 const tileSize = 60;  
-const wallThickness = 3; // much thinner
+const wallThickness = 4; // thinner
 const spriteSize = 40;
-const kissSize = 28;
+const kissSize = 32; // bigger for score & gameplay
 
 let player, enemy;
 let playerEl, enemyEl;
@@ -221,7 +221,7 @@ function createUI() {
   const uiContainer = document.createElement("div");
   uiContainer.style.display = "flex";
   uiContainer.style.justifyContent = "space-between";
-  uiContainer.style.alignItems = "center";  // aligns score & timer properly
+  uiContainer.style.alignItems = "center";
   uiContainer.style.width = maze[0].length * tileSize + "px";
   uiContainer.style.margin = "0 auto 10px auto";
 
@@ -232,8 +232,8 @@ function createUI() {
 
   const kissIcon = document.createElement("img");
   kissIcon.src = "images/kiss.png";
-  kissIcon.style.width = "auto";       // maintain proportions
-  kissIcon.style.height = "35px";      // scalable height
+  kissIcon.style.height = "35px"; // bigger
+  kissIcon.style.width = "auto";   // maintain proportions
   kissIcon.style.objectFit = "contain";
   kissIcon.style.marginRight = "5px";
   scoreEl.appendChild(kissIcon);
@@ -244,7 +244,9 @@ function createUI() {
 
   // Timer
   timerEl = document.createElement("div");
-  timerEl.textContent = `Time: ${timeLeft}s`; // exact original format
+  timerEl.textContent = `Time: ${timeLeft}s`;
+  timerEl.style.fontWeight = "bold";
+  timerEl.style.color = "#ff4da6"; // same pink as walls
 
   uiContainer.appendChild(scoreEl);
   uiContainer.appendChild(timerEl);
@@ -275,7 +277,7 @@ function drawMaze() {
         wall.style.height = tileSize + "px";
         wall.style.background = "#ff4da6";
         wall.style.boxSizing = "border-box";
-        wall.style.border = `${wallThickness}px solid #ffe6f0`; // thin continuous line
+        wall.style.border = `${wallThickness}px solid #ff4da6`; // thin continuous line
         mazeWrapper.appendChild(wall);
       }
       if (cell === 2) {
@@ -317,6 +319,7 @@ function createEnemy() {
   enemyEl.style.height = spriteSize + "px";
   enemyEl.style.background = "black";
   enemyEl.style.borderRadius = "50%";
+  enemyEl.style.zIndex = "1000"; // on top of kisses
   document.getElementById("maze-wrapper").appendChild(enemyEl);
 }
 function updateEnemy() {
@@ -337,6 +340,7 @@ function placeKisses() {
         kiss.style.width = "auto";   // maintain proportions
         kiss.style.left = x * tileSize + (tileSize - kissSize)/2 + "px";
         kiss.style.top = y * tileSize + (tileSize - kissSize)/2 + "px";
+        kiss.style.zIndex = "1"; // kisses below enemy
         mazeWrapper.appendChild(kiss);
         kisses.push({ x, y, el: kiss });
       }
@@ -444,7 +448,7 @@ function startEnemy() {
 function startTimer() {
   gameTimer = setInterval(() => {
     timeLeft--;
-    timerEl.textContent = `Time: ${timeLeft}s`; // exactly as original
+    timerEl.textContent = `Time: ${timeLeft}s`; // original format
     if (timeLeft <= 0) {
       clearInterval(gameTimer);
       clearInterval(enemyInterval);
