@@ -323,14 +323,14 @@ function checkCollisions() {
 
     // Win condition
     if (maze[player.y][player.x] === 2) {
-        alert("You reached the end 💖");
+        alert("You Win!");
         gamePage.classList.add("hidden");
         finalPage.classList.remove("hidden");
     }
 
     // Enemy collision
     if (enemy.x === player.x && enemy.y === player.y) {
-        alert("You got caught 😭 Restarting...");
+        alert("Oops... Restarting...");
         initGame();
     }
 }
@@ -359,7 +359,7 @@ setInterval(() => {
     }
 
     if (enemy.x === player.x && enemy.y === player.y) {
-        alert("You got caught 😭 Restarting...");
+        alert("Oops... Restarting...");
         initGame();
     }
 
