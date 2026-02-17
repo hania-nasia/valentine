@@ -41,15 +41,20 @@ button { padding: 15px 30px;
 #crash-page {
     position: fixed;
     inset: 0;
-    background: #ffe6f0; 
+    background: #ffe6f0;
     justify-content: center;
     align-items: center;
     flex-direction: column;
     z-index: 9999;
-    overflow: hidden;
 }
 
-#crash-page: not(.hidden) {display: flex; }
+#crash-page.hidden {
+    display: none;
+}
+
+#crash-page:not(.hidden) {
+    display: flex;
+}
 
 /* Loading UI */
 #loading-container {
