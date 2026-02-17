@@ -9,8 +9,8 @@ const yesBtn = document.getElementById("yes-btn");
 const noBtn = document.getElementById("no-btn");
 const container = document.getElementById("button-container");
 
-let moveDistance = 150;
-const maxSpeed = 1200;
+let moveDistance = 180;
+const maxSpeed = 2000;
 
 
 
@@ -63,7 +63,7 @@ container.addEventListener("mousemove", (e) => {
         noBtn.style.top = newY + "px";
 
         if (moveDistance < maxSpeed) {
-            moveDistance *= 1.08;
+            moveDistance *= 1.12;
         }
     }
 });
