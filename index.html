@@ -6,39 +6,41 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+
     <div id="envelope-page" style="text-align: center;">
         <img src="images/envelope.jpeg" alt="Envelope">
         <p>You have received a letter</p>
         <button id="open-envelope">Open</button>
     </div>
 
-    <div id="letter-page" class = "hidden">
-     <img src="images/letter.png" alt="Letter">
-       <div id="button-container">
-        <button id="yes-btn">Yes</button>
-        <button id="no-btn">No</button>
-       </div>
-    </div>
-
-   <div id="crash-page" class="hidden">
-    <div id="loading-container">
-        <h2>Loading...</h2>
-        <div id="loading-bar">
-            <div id="loading-progress"></div>
-        </div>
-        <p id="loading-percent">0%</p>
-    </div>
-</div>
-
-    <div id="game-page" class = "hidden">
-        <div id="game">
-            <div id="player"></div>
+    <div id="letter-page" class="hidden">
+        <img src="images/letter.png" alt="Letter">
+        <div id="button-container">
+            <button id="yes-btn">Yes</button>
+            <button id="no-btn">No</button>
         </div>
     </div>
 
-    <div id="final-page" class = "hidden">
+    <div id="crash-page" class="hidden">
+        <div id="loading-container">
+            <h2>Loading...</h2>
+            <div id="loading-bar">
+                <div id="loading-progress"></div>
+            </div>
+            <p id="loading-percent">0%</p>
+        </div>
+    </div>
+
+    <div id="game-page" class="hidden">
+        <div id="game"></div>
+    </div>
+
+    <div id="final-page" class="hidden">
         <h1>Happy Valentine’s Day! ❤️</h1>
     </div>
+
+    <!-- BLACK GLITCH REVEAL SCREEN -->
+    <div id="black-reveal" class="hidden"></div>
 
     <script src="script.js"></script>
 </body>
