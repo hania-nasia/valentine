@@ -120,7 +120,6 @@ function triggerCrashEffect() {
     let shakeAmount = 0;
 
     const shakeInterval = setInterval(() => {
-
         shakeAmount += 4;
 
         crashPage.style.transform =
@@ -140,7 +139,6 @@ function triggerCrashEffect() {
     flash.style.background = "white";
     flash.style.opacity = "0";
     flash.style.zIndex = "10000";
-    flash.style.pointerEvents = "none";
     document.body.appendChild(flash);
 
     setTimeout(() => {
@@ -155,13 +153,55 @@ function triggerCrashEffect() {
         crashPage.style.transform = "none";
         crashPage.style.filter = "none";
 
-        crashPage.classList.add("hidden");
-        gamePage.classList.remove("hidden");
-
         overlay.remove();
         flash.remove();
 
+        crashPage.classList.add("hidden");
+
+        const blackReveal = document.getElementById("black-reveal");
+        blackReveal.classList.remove("hidden");
+
+        setTimeout(() => {
+            startGlitchReveal();
+        }, 1000);
+
     }, 5000);
+}
+
+function startGlitchReveal() {
+
+    const blackReveal = document.getElementById("black-reveal");
+
+    gamePage.classList.remove("hidden");
+
+    const columns = 20;
+    const rows = 12;
+
+    blackReveal.style.gridTemplateColumns = `repeat(${columns}, 1fr)`;
+    blackReveal.style.gridTemplateRows = `repeat(${rows}, 1fr)`;
+
+    const tiles = [];
+
+    for (let i = 0; i < columns * rows; i++) {
+        const tile = document.createElement("div");
+        tile.classList.add("reveal-tile");
+        blackReveal.appendChild(tile);
+        tiles.push(tile);
+    }
+
+    tiles.sort(() => Math.random() - 0.5);
+
+    tiles.forEach((tile, index) => {
+        setTimeout(() => {
+            tile.classList.add("revealed");
+        }, index * 15 + Math.random() * 200);
+    });
+
+    setTimeout(() => {
+        blackReveal.innerHTML = "";
+        blackReveal.classList.add("hidden");
+        initGame();
+    }, 2000);
 }
 
 // ================= FULL PACMAN VALENTINE GAME =================
