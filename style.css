@@ -1,42 +1,54 @@
-body { text-align: center; font-family: Arial; background: #ffe6f0; }
+body {
+    text-align: center;
+    font-family: Arial;
+    background: #ffe6f0;
+}
 
-.hidden {display: none;
-        }
+.hidden {
+    display: none;
+}
 
-img { max-width: 40%; margin: 20px 0; }
+img {
+    max-width: 40%;
+    margin: 20px 0;
+}
 
-button { padding: 15px 30px; 
-        font-size: 18px; 
-        cursor: pointer; 
-        border-radius: 8px; }
+button {
+    padding: 15px 30px;
+    font-size: 18px;
+    cursor: pointer;
+    border-radius: 8px;
+}
 
-#button-container { position: relative;
-                   width: 400px;
-                   height: 200px;
-                   margin:-20px auto 0 auto;
-                  }
+#button-container {
+    position: relative;
+    width: 400px;
+    height: 200px;
+    margin: -20px auto 0 auto;
+}
 
-#yes-btn, #no-btn { position: absolute; 
-                  padding: 15px 30px;
-                  font-size: 18px;
-                  cursor: pointer; 
-                  border-radius: 8px;
-                 }
+#yes-btn, #no-btn {
+    position: absolute;
+    padding: 15px 30px;
+    font-size: 18px;
+    cursor: pointer;
+    border-radius: 8px;
+}
 
-#yes-btn { left: 110px;
-          top: 40px;
-         }
+#yes-btn { left: 110px; top: 40px; }
 
-#no-btn { left: 220px;
-        top: 40px;
-         transition: all 0.2s ease;
-        }
+#no-btn {
+    left: 220px;
+    top: 40px;
+    transition: all 0.2s ease;
+}
 
-#letter-page { text-align: center;
-              position: relative;
-              min-height: 100vh;
-                      overflow: hidden;
-             }
+#letter-page {
+    text-align: center;
+    position: relative;
+    min-height: 100vh;
+    overflow: hidden;
+}
 
 #crash-page {
     position: fixed;
@@ -48,25 +60,14 @@ button { padding: 15px 30px;
     z-index: 9999;
 }
 
-#crash-page.hidden {
-    display: none;
-}
-
-#crash-page:not(.hidden) {
-    display: flex;
-}
-
-/* Loading UI */
-#loading-container {
-    text-align: center;
-}
+#crash-page.hidden { display: none; }
+#crash-page:not(.hidden) { display: flex; }
 
 #loading-bar {
     width: 300px;
     height: 20px;
     border: 2px solid #ff4da6;
     margin: 15px auto;
-    position: relative;
     overflow: hidden;
 }
 
@@ -82,7 +83,7 @@ button { padding: 15px 30px;
     color: #ff4da6;
 }
 
-/* Glitch overlay bars */
+/* Glitch overlay */
 .glitch-overlay {
     position: absolute;
     width: 100%;
@@ -97,4 +98,25 @@ button { padding: 15px 30px;
     50% { background: rgba(255, 255, 255, 0.2); }
     75% { background: rgba(255, 0, 128, 0.15); }
     100% { background: transparent; }
+}
+
+/* ================= BLACK GLITCH REVEAL ================= */
+
+#black-reveal {
+    position: fixed;
+    inset: 0;
+    background: black;
+    z-index: 20000;
+    display: grid;
+    pointer-events: none;
+}
+
+.reveal-tile {
+    background: black;
+    opacity: 1;
+    transition: opacity 0.4s ease;
+}
+
+.reveal-tile.revealed {
+    opacity: 0;
 }
