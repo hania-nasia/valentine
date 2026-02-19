@@ -138,7 +138,6 @@ function triggerCrashEffect() {
         // Show black screen
         blackReveal.classList.remove("hidden");
         blackReveal.style.display = "block";
-        blackReveal.style.background = "black";
 
         crashPage.classList.add("hidden");
 
