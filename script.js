@@ -492,8 +492,3 @@ function startTimer() {
     }
   }, 1000);
 }
-
-// ================= START GAME WHEN PAGE SHOWN =================
-const observer = new MutationObserver(() => {
-  if (!gamePage.classList.contains("hidden")) initGame();
-});
