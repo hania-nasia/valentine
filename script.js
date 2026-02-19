@@ -476,7 +476,7 @@ function startEnemy() {
     moveEnemyTowardsPlayer();
     updateEnemy();
     checkCollisions();
-    if (enemySpeed > 200) { enemySpeed -= 1; startEnemy(); }
+    if (enemySpeed > 200) enemySpeed -= 1;
   }, enemySpeed);
 }
 
