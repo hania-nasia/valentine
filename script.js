@@ -142,12 +142,11 @@ function triggerCrashEffect() {
         crashPage.classList.add("hidden");
 
         // Wait 1 second, then start tile reveal
-        setTimeout(() => {
-            startGlitchReveal();
-        }, 1000);
-
-    }, 1000);
-}
+   setTimeout(() => {
+    requestAnimationFrame(() => {
+        startGlitchReveal();
+    });
+}, 1000);
 
 // ================= BLACK GLITCH REVEAL (Glitchy Version) =================
 function startGlitchReveal() {
