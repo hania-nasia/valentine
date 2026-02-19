@@ -125,35 +125,36 @@ function triggerCrashEffect() {
     let shakeAmount = 0;
 
     const shakeInterval = setInterval(() => {
-
         shakeAmount += 3;
 
         crashPage.style.transform =
             `translate(${Math.random()*shakeAmount - shakeAmount/2}px,
                        ${Math.random()*shakeAmount - shakeAmount/2}px)
              rotate(${Math.random()*6 - 3}deg)`;
-
     }, 40);
 
-    // After short shake → IMMEDIATE BLACK
+    // Shake lasts 1 second
     setTimeout(() => {
 
         clearInterval(shakeInterval);
-
         crashPage.style.transform = "none";
-        crashPage.classList.add("hidden");
 
-        // Show pure black screen
+        // 🔥 SHOW BLACK FIRST (prevents pink flash)
         blackReveal.style.display = "block";
         blackReveal.style.background = "black";
-        blackReveal.innerHTML = "";
+        blackReveal.style.inset = "0";
+        blackReveal.style.position = "fixed";
+        blackReveal.style.zIndex = "20000";
 
-        // Hold black for 1.5 seconds
+        // THEN hide crash page
+        crashPage.classList.add("hidden");
+
+        // EXACT 1.5 seconds full black
         setTimeout(() => {
             startGlitchReveal();
         }, 1500);
 
-    }, 1000); // 1 second shake
+    }, 1000);
 }
 
 // ================= BLACK GLITCH REVEAL =================
@@ -165,9 +166,10 @@ function startGlitchReveal() {
     // Show game behind black
     gamePage.classList.remove("hidden");
 
-    const columns = 25;
-    const rows = 15;
+    const columns = 30;
+    const rows = 18;
 
+    blackReveal.innerHTML = "";
     blackReveal.style.display = "grid";
     blackReveal.style.gridTemplateColumns = `repeat(${columns}, 1fr)`;
     blackReveal.style.gridTemplateRows = `repeat(${rows}, 1fr)`;
@@ -178,30 +180,31 @@ function startGlitchReveal() {
         const tile = document.createElement("div");
         tile.style.background = "black";
         tile.style.opacity = "1";
-        tile.style.transition = "opacity 0.4s ease";
+        tile.style.transition = "opacity 0.3s ease";
         blackReveal.appendChild(tile);
         tiles.push(tile);
     }
 
-    // Randomize reveal order
+    // Shuffle tiles randomly
     tiles.sort(() => Math.random() - 0.5);
+
+    // Total reveal duration ~1 second
+    const revealDuration = 1000;
+    const intervalTime = revealDuration / tiles.length;
 
     tiles.forEach((tile, index) => {
         setTimeout(() => {
             tile.style.opacity = "0";
-        }, index * 15);
+        }, index * intervalTime);
     });
 
-    // AFTER full reveal → remove overlay → start game
+    // After reveal completes
     setTimeout(() => {
 
-        blackReveal.innerHTML = "";
         blackReveal.style.display = "none";
+        blackReveal.innerHTML = "";
 
         initGame(); // 🔥 TIMER STARTS HERE
 
-    }, tiles.length * 15 + 500);
+    }, revealDuration + 100);
 }
-
-// ================= FULL PACMAN VALENTINE GAME =================
-// (Everything below this line remains EXACTLY your original code)
