@@ -119,27 +119,25 @@ function startGlitch() {
 
 // ================= CRASH SHAKE → BLACK SCREEN =================
 function triggerCrashEffect() {
-
     const blackReveal = document.getElementById("black-reveal");
 
     let shakeAmount = 0;
 
     const shakeInterval = setInterval(() => {
         shakeAmount += 3;
-
-        crashPage.style.transform =
-            `translate(${Math.random()*shakeAmount - shakeAmount/2}px,
-                       ${Math.random()*shakeAmount - shakeAmount/2}px)
-             rotate(${Math.random()*6 - 3}deg)`;
+        crashPage.style.transform = `
+            translate(${Math.random() * shakeAmount - shakeAmount / 2}px,
+                      ${Math.random() * shakeAmount - shakeAmount / 2}px)
+            rotate(${Math.random() * 6 - 3}deg)
+        `;
     }, 40);
 
     // Shake lasts 1 second
     setTimeout(() => {
-
         clearInterval(shakeInterval);
         crashPage.style.transform = "none";
 
-        // 🔥 Show black screen immediately
+        // Show full black screen for EXACTLY 1 second
         blackReveal.style.display = "block";
         blackReveal.style.background = "black";
         blackReveal.style.position = "fixed";
@@ -150,22 +148,18 @@ function triggerCrashEffect() {
         // Hide crash page
         crashPage.classList.add("hidden");
 
-        // EXACT 1 second full black before glitch reveal
+        // After 1 second, start the glitch tile reveal
         setTimeout(() => {
             startGlitchReveal();
         }, 1000);
-
     }, 1000); // 1s shake
 }
 
-// ================= BLACK GLITCH REVEAL =================
-
 // ================= BLACK GLITCH REVEAL (Glitchy Version) =================
 function startGlitchReveal() {
-
     const blackReveal = document.getElementById("black-reveal");
 
-    // Show game behind black
+    // Ensure the game is behind the black overlay
     gamePage.classList.remove("hidden");
 
     const columns = 30;
@@ -177,7 +171,6 @@ function startGlitchReveal() {
     blackReveal.style.gridTemplateRows = `repeat(${rows}, 1fr)`;
 
     const tiles = [];
-
     for (let i = 0; i < columns * rows; i++) {
         const tile = document.createElement("div");
         tile.style.background = "black";
@@ -191,8 +184,6 @@ function startGlitchReveal() {
 
     // Rapid random bursts of disappearing tiles
     const glitchInterval = setInterval(() => {
-
-        // Pick 5–10 random tiles each tick to reveal
         const count = Math.min(unrevealed.length, 5 + Math.floor(Math.random() * 6));
         for (let i = 0; i < count; i++) {
             const idx = Math.floor(Math.random() * unrevealed.length);
@@ -201,16 +192,17 @@ function startGlitchReveal() {
             unrevealed.splice(idx, 1);
         }
 
-        // Stop when all tiles revealed
         if (unrevealed.length === 0) {
             clearInterval(glitchInterval);
             blackReveal.style.display = "none";
             blackReveal.innerHTML = "";
-            initGame(); // 🔥 Timer starts here
-        }
 
-    }, 40); // every 40ms a burst of tiles disappears
+            // 🔥 Start the game AFTER full reveal
+            initGame();
+        }
+    }, 40);
 }
+
 const maze = [
   [1,1,1,1,1,1,1,1,1,1,1,1,1,1],
   [1,0,0,0,0,1,0,0,0,0,0,0,0,1],
