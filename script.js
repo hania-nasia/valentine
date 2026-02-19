@@ -65,6 +65,7 @@ container.addEventListener("mousemove", (e) => {
 
 // ================= FAKE LOADING =================
 
+// ================= FAKE LOADING =================
 function startGlitch() {
 
     const progressBar = document.getElementById("loading-progress");
@@ -84,7 +85,6 @@ function startGlitch() {
         percentText.textContent = Math.floor(percent) + "%";
 
         if (percent >= 100) {
-
             clearInterval(loadInterval);
 
             // 🔥 Glitch loading bar
@@ -94,8 +94,7 @@ function startGlitch() {
                 progressBar.style.transform =
                     `translate(${Math.random()*10-5}px, ${Math.random()*10-5}px)`;
 
-                progressBar.style.background =
-                    `hsl(${Math.random()*360}, 100%, 50%)`;
+                progressBar.style.background = "#ff4da6"; // dark pink
 
                 crashPage.style.filter =
                     `hue-rotate(${Math.random()*360}deg)`;
@@ -118,6 +117,7 @@ function startGlitch() {
 
 // ================= CRASH SHAKE → BLACK SCREEN =================
 
+// ================= CRASH SHAKE → BLACK SCREEN =================
 function triggerCrashEffect() {
 
     const blackReveal = document.getElementById("black-reveal");
@@ -139,26 +139,28 @@ function triggerCrashEffect() {
         clearInterval(shakeInterval);
         crashPage.style.transform = "none";
 
-        // 🔥 SHOW BLACK FIRST (prevents pink flash)
+        // 🔥 Show black screen immediately
         blackReveal.style.display = "block";
         blackReveal.style.background = "black";
-        blackReveal.style.inset = "0";
         blackReveal.style.position = "fixed";
+        blackReveal.style.inset = "0";
         blackReveal.style.zIndex = "20000";
+        blackReveal.innerHTML = "";
 
-        // THEN hide crash page
+        // Hide crash page
         crashPage.classList.add("hidden");
 
-        // EXACT 1.5 seconds full black
+        // EXACT 1 second full black before glitch reveal
         setTimeout(() => {
             startGlitchReveal();
-        }, 1500);
+        }, 1000);
 
-    }, 1000);
+    }, 1000); // 1s shake
 }
 
 // ================= BLACK GLITCH REVEAL =================
 
+// ================= BLACK GLITCH REVEAL (Glitchy Version) =================
 function startGlitchReveal() {
 
     const blackReveal = document.getElementById("black-reveal");
@@ -180,35 +182,35 @@ function startGlitchReveal() {
         const tile = document.createElement("div");
         tile.style.background = "black";
         tile.style.opacity = "1";
-        tile.style.transition = "opacity 0.3s ease";
+        tile.style.transition = "opacity 0.2s ease";
         blackReveal.appendChild(tile);
         tiles.push(tile);
     }
 
-    // Shuffle tiles randomly
-    tiles.sort(() => Math.random() - 0.5);
+    let unrevealed = [...tiles];
 
-    // Total reveal duration ~1 second
-    const revealDuration = 1000;
-    const intervalTime = revealDuration / tiles.length;
+    // Rapid random bursts of disappearing tiles
+    const glitchInterval = setInterval(() => {
 
-    tiles.forEach((tile, index) => {
-        setTimeout(() => {
+        // Pick 5–10 random tiles each tick to reveal
+        const count = Math.min(unrevealed.length, 5 + Math.floor(Math.random() * 6));
+        for (let i = 0; i < count; i++) {
+            const idx = Math.floor(Math.random() * unrevealed.length);
+            const tile = unrevealed[idx];
             tile.style.opacity = "0";
-        }, index * intervalTime);
-    });
+            unrevealed.splice(idx, 1);
+        }
 
-    // After reveal completes
-    setTimeout(() => {
+        // Stop when all tiles revealed
+        if (unrevealed.length === 0) {
+            clearInterval(glitchInterval);
+            blackReveal.style.display = "none";
+            blackReveal.innerHTML = "";
+            initGame(); // 🔥 Timer starts here
+        }
 
-        blackReveal.style.display = "none";
-        blackReveal.innerHTML = "";
-
-        initGame(); // 🔥 TIMER STARTS HERE
-
-    }, revealDuration + 100);
+    }, 40); // every 40ms a burst of tiles disappears
 }
-
 const maze = [
   [1,1,1,1,1,1,1,1,1,1,1,1,1,1],
   [1,0,0,0,0,1,0,0,0,0,0,0,0,1],
