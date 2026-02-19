@@ -136,64 +136,70 @@ function triggerCrashEffect() {
         clearInterval(shakeInterval);
         crashPage.style.transform = "none";
 
-        // Show black screen
-        blackReveal.style.display = "grid";
+        // Show full black screen immediately
+        blackReveal.style.display = "block";
+        blackReveal.style.background = "black";
         blackReveal.style.position = "fixed";
         blackReveal.style.inset = "0";
         blackReveal.style.zIndex = "20000";
-        blackReveal.style.background = "black";
         blackReveal.innerHTML = "";
 
         // Hide crash page
         crashPage.classList.add("hidden");
 
-        // Wait exactly 1 second full black
+        // Wait exactly 1 second before starting tile reveal
         setTimeout(() => {
-            startGlitchReveal();
+            startGlitchReveal(); // ← tile-by-tile reveal happens here
         }, 1000);
-    }, 1000); // shake duration
+
+    }, 1000); // 1s shake
 }
 
 // ================= BLACK GLITCH REVEAL (Glitchy Version) =================
 function startGlitchReveal() {
     const blackReveal = document.getElementById("black-reveal");
+
+    // Make game visible behind black tiles
+    gamePage.classList.remove("hidden");
+
     const columns = 30;
     const rows = 18;
 
-    // Show game behind the overlay
-    gamePage.classList.remove("hidden");
-
     blackReveal.innerHTML = "";
+    blackReveal.style.display = "grid";
     blackReveal.style.gridTemplateColumns = `repeat(${columns}, 1fr)`;
     blackReveal.style.gridTemplateRows = `repeat(${rows}, 1fr)`;
 
     const tiles = [];
+
     for (let i = 0; i < columns * rows; i++) {
         const tile = document.createElement("div");
-        tile.classList.add("reveal-tile");
+        tile.classList.add("reveal-tile"); // CSS handles opacity transition
         blackReveal.appendChild(tile);
         tiles.push(tile);
     }
 
-    // Shuffle tiles for random reveal
-    const shuffled = tiles.sort(() => Math.random() - 0.5);
+    let unrevealed = [...tiles];
 
-    shuffled.forEach((tile, index) => {
-        // random delay between 0 and 1200ms
-        const delay = index * 20 + Math.random() * 200;
-        setTimeout(() => {
-            tile.classList.add("revealed");
-        }, delay);
-    });
+    // Gradually remove tiles in random bursts
+    const glitchInterval = setInterval(() => {
+        const count = Math.min(unrevealed.length, 5 + Math.floor(Math.random() * 6));
+        for (let i = 0; i < count; i++) {
+            const idx = Math.floor(Math.random() * unrevealed.length);
+            const tile = unrevealed[idx];
+            tile.classList.add("revealed"); // fade out
+            unrevealed.splice(idx, 1);
+        }
 
-    // Remove overlay after all tiles revealed
-    const maxDelay = shuffled.length * 20 + 200;
-    setTimeout(() => {
-        blackReveal.style.display = "none";
-        blackReveal.innerHTML = "";
-        // Start game timer and gameplay
-        initGame();
-    }, maxDelay + 50);
+        if (unrevealed.length === 0) {
+            clearInterval(glitchInterval);
+            blackReveal.style.display = "none";
+            blackReveal.innerHTML = "";
+
+            // Start the game only after full reveal
+            initGame();
+        }
+    }, 40); // every 40ms
 }
 
 const maze = [
