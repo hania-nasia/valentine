@@ -76,95 +76,99 @@ function startGlitch() {
 
         if (percent < 60) percent += Math.random() * 6;
         else if (percent < 90) percent += Math.random() * 2;
-        else if (percent < 99) percent += Math.random() * 0.4;
+        else if (percent < 100) percent += Math.random() * 1.5;
 
-        percent = Math.min(percent, 99);
+        percent = Math.min(percent, 100);
 
         progressBar.style.width = percent + "%";
         percentText.textContent = Math.floor(percent) + "%";
 
-        if (percent >= 99) {
+        if (percent >= 100) {
+
             clearInterval(loadInterval);
-            setTimeout(() => {
-                triggerCrashEffect();
-            }, 1000);
+
+            // 🔥 Glitch loading bar
+            let glitchCount = 0;
+            const glitchInterval = setInterval(() => {
+
+                progressBar.style.transform =
+                    `translate(${Math.random()*10-5}px, ${Math.random()*10-5}px)`;
+
+                progressBar.style.background =
+                    `hsl(${Math.random()*360}, 100%, 50%)`;
+
+                crashPage.style.filter =
+                    `hue-rotate(${Math.random()*360}deg)`;
+
+                glitchCount++;
+
+                if (glitchCount > 20) {
+                    clearInterval(glitchInterval);
+                    progressBar.style.transform = "none";
+                    progressBar.style.background = "#ff4da6";
+                    crashPage.style.filter = "none";
+                    triggerCrashEffect();
+                }
+
+            }, 60);
         }
 
     }, 120);
 }
 
-// ================= EXPLOSION / GLITCH =================
+// ================= CRASH SHAKE → BLACK SCREEN =================
 
 function triggerCrashEffect() {
 
-    const overlay = document.createElement("div");
-    overlay.classList.add("glitch-overlay");
-    crashPage.appendChild(overlay);
+    const blackReveal = document.getElementById("black-reveal");
 
     let shakeAmount = 0;
 
     const shakeInterval = setInterval(() => {
-        shakeAmount += 4;
+
+        shakeAmount += 3;
 
         crashPage.style.transform =
-            `translate(${Math.random() * shakeAmount - shakeAmount/2}px,
-                       ${Math.random() * shakeAmount - shakeAmount/2}px)
-             rotate(${Math.random() * 6 - 3}deg)`;
-
-        crashPage.style.filter =
-            `hue-rotate(${Math.random() * 360}deg)
-             contrast(${1 + Math.random() * 2})`;
+            `translate(${Math.random()*shakeAmount - shakeAmount/2}px,
+                       ${Math.random()*shakeAmount - shakeAmount/2}px)
+             rotate(${Math.random()*6 - 3}deg)`;
 
     }, 40);
 
-    const flash = document.createElement("div");
-    flash.style.position = "fixed";
-    flash.style.inset = "0";
-    flash.style.background = "white";
-    flash.style.opacity = "0";
-    flash.style.zIndex = "10000";
-    document.body.appendChild(flash);
-
-    setTimeout(() => {
-        flash.style.transition = "opacity 0.15s";
-        flash.style.opacity = "1";
-    }, 500);
-
+    // After short shake → IMMEDIATE BLACK
     setTimeout(() => {
 
         clearInterval(shakeInterval);
 
         crashPage.style.transform = "none";
-        crashPage.style.filter = "none";
-
-        overlay.remove();
-        flash.remove();
-
         crashPage.classList.add("hidden");
 
-        const blackReveal = document.getElementById("black-reveal");
-        blackReveal.style.display = "grid";
+        // Show pure black screen
+        blackReveal.style.display = "block";
+        blackReveal.style.background = "black";
+        blackReveal.innerHTML = "";
 
-        // Stay fully black for 1.5 seconds
+        // Hold black for 1.5 seconds
         setTimeout(() => {
             startGlitchReveal();
         }, 1500);
 
-    }, 5000);
+    }, 1000); // 1 second shake
 }
 
-// ================= BLACK REVEAL =================
+// ================= BLACK GLITCH REVEAL =================
 
 function startGlitchReveal() {
 
     const blackReveal = document.getElementById("black-reveal");
 
-    // Show empty game page behind black screen
+    // Show game behind black
     gamePage.classList.remove("hidden");
 
-    const columns = 20;
-    const rows = 12;
+    const columns = 25;
+    const rows = 15;
 
+    blackReveal.style.display = "grid";
     blackReveal.style.gridTemplateColumns = `repeat(${columns}, 1fr)`;
     blackReveal.style.gridTemplateRows = `repeat(${rows}, 1fr)`;
 
@@ -172,60 +176,32 @@ function startGlitchReveal() {
 
     for (let i = 0; i < columns * rows; i++) {
         const tile = document.createElement("div");
-        tile.classList.add("reveal-tile");
+        tile.style.background = "black";
+        tile.style.opacity = "1";
+        tile.style.transition = "opacity 0.4s ease";
         blackReveal.appendChild(tile);
         tiles.push(tile);
     }
 
+    // Randomize reveal order
     tiles.sort(() => Math.random() - 0.5);
 
     tiles.forEach((tile, index) => {
         setTimeout(() => {
-            tile.classList.add("revealed");
-        }, index * 20);
+            tile.style.opacity = "0";
+        }, index * 15);
     });
 
-    // AFTER reveal finishes → remove overlay → start game
+    // AFTER full reveal → remove overlay → start game
     setTimeout(() => {
+
         blackReveal.innerHTML = "";
         blackReveal.style.display = "none";
 
-        initGame(); // 🔥 GAME STARTS HERE (timer begins now)
+        initGame(); // 🔥 TIMER STARTS HERE
 
-    }, tiles.length * 20 + 500);
+    }, tiles.length * 15 + 500);
 }
 
 // ================= FULL PACMAN VALENTINE GAME =================
-
-// (Everything below is unchanged from your original code)
-
-const maze = [
-  [1,1,1,1,1,1,1,1,1,1,1,1,1,1],
-  [1,0,0,0,0,1,0,0,0,0,0,0,0,1],
-  [1,0,1,1,0,1,0,1,1,1,1,1,0,1],
-  [1,0,1,0,0,0,0,0,0,0,0,1,0,1],
-  [1,0,1,0,1,1,1,1,1,1,0,1,0,1],
-  [1,0,0,0,1,0,0,0,0,1,0,0,0,1],
-  [1,1,1,0,1,0,1,1,0,1,1,1,0,1],
-  [1,0,0,0,0,0,1,0,0,0,0,1,0,1],
-  [1,0,1,1,1,0,1,0,1,1,0,1,0,1],
-  [1,0,0,0,1,0,0,0,0,1,0,0,0,2],
-  [1,1,1,1,1,1,1,1,1,1,1,1,1,1],
-];
-
-const gameContainer = document.getElementById("game");
-const tileSize = 60;
-const wallThickness = 4;
-const spriteSize = 40;
-const kissSize = 32;
-
-let player, enemy;
-let playerEl, enemyEl;
-let kisses = [];
-let enemyInterval, gameTimer;
-let enemySpeed = 500;
-let timeLeft = 60;
-let score = 0;
-let scoreEl, timerEl;
-
-// (Rest of your game code remains EXACTLY the same)
+// (Everything below this line remains EXACTLY your original code)
