@@ -122,6 +122,7 @@ function triggerCrashEffect() {
 
     let shakeAmount = 0;
 
+    // Shake interval
     const shakeInterval = setInterval(() => {
         shakeAmount += 3;
         crashPage.style.transform = `
@@ -136,7 +137,7 @@ function triggerCrashEffect() {
         clearInterval(shakeInterval);
         crashPage.style.transform = "none";
 
-        // Show full black screen immediately
+        // Show black screen immediately
         blackReveal.style.display = "block";
         blackReveal.style.background = "black";
         blackReveal.style.position = "fixed";
@@ -147,14 +148,13 @@ function triggerCrashEffect() {
         // Hide crash page
         crashPage.classList.add("hidden");
 
-        // Wait exactly 1 second before starting tile reveal
+        // Wait 1 second before starting tile reveal
         setTimeout(() => {
-            startGlitchReveal(); // ← tile-by-tile reveal happens here
+            startGlitchReveal();
         }, 1000);
 
-    }, 1000); // 1s shake
+    }, 1000); // shake duration
 }
-
 // ================= BLACK GLITCH REVEAL (Glitchy Version) =================
 function startGlitchReveal() {
     const blackReveal = document.getElementById("black-reveal");
@@ -172,16 +172,17 @@ function startGlitchReveal() {
 
     const tiles = [];
 
+    // Create black tiles
     for (let i = 0; i < columns * rows; i++) {
         const tile = document.createElement("div");
-        tile.classList.add("reveal-tile"); // CSS handles opacity transition
+        tile.classList.add("reveal-tile");
         blackReveal.appendChild(tile);
         tiles.push(tile);
     }
 
     let unrevealed = [...tiles];
 
-    // Gradually remove tiles in random bursts
+    // Randomly reveal tiles in bursts
     const glitchInterval = setInterval(() => {
         const count = Math.min(unrevealed.length, 5 + Math.floor(Math.random() * 6));
         for (let i = 0; i < count; i++) {
@@ -199,7 +200,7 @@ function startGlitchReveal() {
             // Start the game only after full reveal
             initGame();
         }
-    }, 40); // every 40ms
+    }, 40);
 }
 
 const maze = [
