@@ -107,7 +107,7 @@ button {
     inset: 0;
     background: black;
     z-index: 20000;
-    display: grid;
+    display: none;   /* important */
     pointer-events: none;
 }
 
