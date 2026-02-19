@@ -117,7 +117,6 @@ function startGlitch() {
 
 // ================= CRASH SHAKE → BLACK SCREEN =================
 
-// ================= CRASH SHAKE → BLACK SCREEN =================
 function triggerCrashEffect() {
     const blackReveal = document.getElementById("black-reveal");
 
@@ -137,70 +136,64 @@ function triggerCrashEffect() {
         clearInterval(shakeInterval);
         crashPage.style.transform = "none";
 
-        // Show full black screen for EXACTLY 1 second
-        blackReveal.style.display = "block";
-        blackReveal.style.background = "black";
+        // Show black screen
+        blackReveal.style.display = "grid";
         blackReveal.style.position = "fixed";
         blackReveal.style.inset = "0";
         blackReveal.style.zIndex = "20000";
+        blackReveal.style.background = "black";
         blackReveal.innerHTML = "";
 
         // Hide crash page
         crashPage.classList.add("hidden");
 
-        // After 1 second, start the glitch tile reveal
+        // Wait exactly 1 second full black
         setTimeout(() => {
             startGlitchReveal();
         }, 1000);
-    }, 1000); // 1s shake
+    }, 1000); // shake duration
 }
 
 // ================= BLACK GLITCH REVEAL (Glitchy Version) =================
 function startGlitchReveal() {
     const blackReveal = document.getElementById("black-reveal");
-
-    // Ensure the game is behind the black overlay
-    gamePage.classList.remove("hidden");
-
     const columns = 30;
     const rows = 18;
 
+    // Show game behind the overlay
+    gamePage.classList.remove("hidden");
+
     blackReveal.innerHTML = "";
-    blackReveal.style.display = "grid";
     blackReveal.style.gridTemplateColumns = `repeat(${columns}, 1fr)`;
     blackReveal.style.gridTemplateRows = `repeat(${rows}, 1fr)`;
 
     const tiles = [];
     for (let i = 0; i < columns * rows; i++) {
         const tile = document.createElement("div");
-        tile.style.background = "black";
-        tile.style.opacity = "1";
-        tile.style.transition = "opacity 0.2s ease";
+        tile.classList.add("reveal-tile");
         blackReveal.appendChild(tile);
         tiles.push(tile);
     }
 
-    let unrevealed = [...tiles];
+    // Shuffle tiles for random reveal
+    const shuffled = tiles.sort(() => Math.random() - 0.5);
 
-    // Rapid random bursts of disappearing tiles
-    const glitchInterval = setInterval(() => {
-        const count = Math.min(unrevealed.length, 5 + Math.floor(Math.random() * 6));
-        for (let i = 0; i < count; i++) {
-            const idx = Math.floor(Math.random() * unrevealed.length);
-            const tile = unrevealed[idx];
-            tile.style.opacity = "0";
-            unrevealed.splice(idx, 1);
-        }
+    shuffled.forEach((tile, index) => {
+        // random delay between 0 and 1200ms
+        const delay = index * 20 + Math.random() * 200;
+        setTimeout(() => {
+            tile.classList.add("revealed");
+        }, delay);
+    });
 
-        if (unrevealed.length === 0) {
-            clearInterval(glitchInterval);
-            blackReveal.style.display = "none";
-            blackReveal.innerHTML = "";
-
-            // 🔥 Start the game AFTER full reveal
-            initGame();
-        }
-    }, 40);
+    // Remove overlay after all tiles revealed
+    const maxDelay = shuffled.length * 20 + 200;
+    setTimeout(() => {
+        blackReveal.style.display = "none";
+        blackReveal.innerHTML = "";
+        // Start game timer and gameplay
+        initGame();
+    }, maxDelay + 50);
 }
 
 const maze = [
