@@ -486,3 +486,5 @@ function startTimer() {
     }
   }, 1000);
 }
+
+setupBlackTiles();
