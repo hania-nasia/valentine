@@ -142,8 +142,10 @@ function triggerCrashEffect() {
         crashPage.classList.add("hidden");
 
         // Wait 1 second, then start reveal
-        setTimeout(() => {
-            startTileReveal();
+       setTimeout(() => {
+            requestAnimationFrame(() => {
+                startTileReveal();
+            });
         }, 1000);
 
     }, 1000);
