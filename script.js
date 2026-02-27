@@ -158,7 +158,6 @@ function setupBlackTiles() {
     const rows = 6;
 
     blackReveal.innerHTML = "";
-    blackReveal.style.display = "grid";
     blackReveal.style.gridTemplateColumns = `repeat(${columns}, 1fr)`;
     blackReveal.style.gridTemplateRows = `repeat(${rows}, 1fr)`;
 
