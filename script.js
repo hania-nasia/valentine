@@ -157,6 +157,7 @@ function triggerCrashEffect() {
     }, 200);
 
 }, 1000);
+}
 
 
 // ================= BLACK TILE REVEAL =================
