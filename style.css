@@ -109,8 +109,8 @@ button {
     height: 100vh;
     background: black;
     z-index: 20000;
-    display: none;
     pointer-events: none;
+    display: grid;
 }
 
 
