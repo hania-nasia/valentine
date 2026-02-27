@@ -177,12 +177,10 @@ function setupBlackTiles() {
 
 
 // ================= BLACK GLITCH REVEAL (Glitchy Version) =================
+
 function startTileReveal() {
     const blackReveal = document.getElementById("black-reveal");
     const tiles = Array.from(blackReveal.children);
-
-    // Show game behind tiles
-    gamePage.classList.remove("hidden");
 
     let remaining = [...tiles];
 
@@ -199,7 +197,10 @@ function startTileReveal() {
         if (remaining.length === 0) {
             clearInterval(interval);
             blackReveal.style.display = "none";
-            initGame();
+
+            // ⭐ DO NOT call initGame() here
+            // The game is already initialized
+            // The timer is already running
         }
     }, 80);
 }
