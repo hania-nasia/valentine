@@ -261,7 +261,6 @@ function initGame() {
   updatePlayer();
   updateEnemy();
   startEnemy();
-  startTimer();
 }
 
 // ================= UI: SCORE + TIMER =================
