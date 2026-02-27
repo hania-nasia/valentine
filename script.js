@@ -129,27 +129,35 @@ function triggerCrashEffect() {
         `;
     }, 40);
 
-    setTimeout(() => {
-        clearInterval(shakeInterval);
-        crashPage.style.transform = "none";
+ setTimeout(() => {
+    clearInterval(shakeInterval);
+    crashPage.style.transform = "none";
 
+    // 1. SHOW FULL BLACK SCREEN FIRST
+    blackReveal.classList.remove("hidden");
+    blackReveal.style.display = "grid";
+
+    // 2. HIDE CRASH PAGE
+    crashPage.classList.add("hidden");
+
+    // 3. WAIT A MOMENT SO BLACK SCREEN IS VISIBLE
+    setTimeout(() => {
+
+        // 4. SHOW GAME PAGE UNDER THE BLACK TILES
         gamePage.classList.remove("hidden");
 
-        blackReveal.classList.remove("hidden");
-        blackReveal.style.display = "grid";
-
-        crashPage.classList.add("hidden");
-
+        // 5. INITIALIZE GAME UNDER THE BLACK TILES
         initGame();
 
+        // 6. START TILE REVEAL AFTER GAME IS READY
         setTimeout(() => {
-            requestAnimationFrame(() => {
-                startTileReveal();
-            });
-        }, 1000);
+            startTileReveal();
+        }, 500);
 
-    }, 1000);
-}
+    }, 200);
+
+}, 1000);
+
 
 // ================= BLACK TILE REVEAL =================
 // ⭐ FIXED VERSION ⭐
