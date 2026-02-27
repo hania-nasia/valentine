@@ -135,11 +135,15 @@ function triggerCrashEffect() {
         clearInterval(shakeInterval);
         crashPage.style.transform = "none";
 
-        // Show black tile screen
-        blackReveal.classList.remove("hidden");
-        blackReveal.style.display = "grid";
+       // Show the game page underneath FIRST
+gamePage.classList.remove("hidden");
 
-        crashPage.classList.add("hidden");
+// Now show the black tile overlay on top
+blackReveal.classList.remove("hidden");
+blackReveal.style.display = "grid";
+
+// Hide the crash page
+crashPage.classList.add("hidden");
 
         // Wait 1 second, then start reveal
        setTimeout(() => {
