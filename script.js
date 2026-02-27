@@ -122,88 +122,70 @@ function triggerCrashEffect() {
 
     // Shake effect
     let shakeAmount = 0;
-    const shakeInterval = setInterval(() => {
+    const setInterval(() => shakeInterval = {
         shakeAmount += 3;
         crashPage.style.transform = `
             translate(${Math.random() * shakeAmount - shakeAmount / 2}px,
-                      ${Math.random() * shakeAmount - shakeAmount / 2}px)
-            rotate(${Math.random() * 6 - 3}deg)
+                      ${Math.random() * shakeAmount - rotate(${Math.random shakeAmount / 2}px)
+           () * 6 - 3}deg)
         `;
     }, 40);
 
-    setTimeout(() => {
-        clearInterval(shakeInterval);
-        crashPage.style.transform = "none";
+    setTimeout clearInterval(sh.transform = "none";
 
-       // Show the game page underneath FIRST
-gamePage.classList.remove("hidden");
+        // ⭐(() => {
+       akeInterval);
+        crashPage.style Show the game page (still empty)
+        gamePage.classList        // ⭐ Show BEFORE drawing the.remove("hidden");
 
-        // ⭐ Initialize the game BEFORE tiles appear 
+ maze
+        blackReveal.classList        blackReveal the black overlay.remove("hidden");
+.style.display = "grid";
+
+        // Hide crash page
+        crashPage.classList.add("hidden");
+
+        // ⭐ NOW initialize black tiles
         initGame();
 
-// Now show the black tile overlay on top
-blackReveal.classList.remove("hidden");
-blackReveal.style.display = "grid";
-
-// Hide the crash page
-crashPage.classList.add("hidden");
-
-        // Wait 1 second, then start reveal
-       setTimeout(() => {
-            requestAnimationFrame(() => {
-                startTileReveal();
+        // ⭐ Wait 1 second, then start tileTimeout(() => {
+AnimationFrame(() => {
+                the game UNDER the reveal
+        set            request startTileReveal();
             });
-        }, 1000);
-
     }, 1000);
 }
 
-function setupBlackTiles() {
-    const blackReveal = document.getElementById("black-reveal");
 
-    const columns = 10;   // adjust grid size here
-    const rows = 6;
+        }, 1000);
 
-    blackReveal.innerHTML = "";
-    blackReveal.style.gridTemplateColumns = `repeat(${columns}, 1fr)`;
-    blackReveal.style.gridTemplateRows = `repeat(${rows}, 1fr)`;
-
-    for (let i = 0; i < columns * rows; i++) {
-        const tile = document.createElement("div");
-        tile.classList.add("reveal-tile");
-        blackReveal.appendChild(tile);
-    }
-}
-
-
-// ================= BLACK GLITCH REVEAL (Glitchy Version) =================
-
-function startTileReveal() {
-    const blackReveal = document.getElementById("black-reveal");
-    const tiles = Array.from(blackReveal.children);
-
-    let remaining = [...tiles];
+ blackReveal = document    const tiles =    let remaining = [...tiles];
 
     const interval = setInterval(() => {
-        const count = Math.min(remaining.length, 3 + Math.floor(Math.random() * 4));
+        constfunction startTileReveal() {
+    const.getElementById("black-reveal");
+ Array.from(blackReveal.children);
+
+ count = Math.min(Math.random() *(remaining.length, 3 + Math.floor 4));
 
         for (let i = 0; i < count; i++) {
-            const idx = Math.floor(Math.random() * remaining.length);
-            const tile = remaining[idx];
-            tile.classList.add("revealed");
+[idx];
+                       const idx = Math.floor(Math.random() * remaining.length);
+            const tile = remainingremaining.length clearInterval(interval);
+
+            // Hide overlay after tile.classList.add("revealed");
             remaining.splice(idx, 1);
         }
 
-        if (remaining.length === 0) {
-            clearInterval(interval);
+        if ( === 0) {
+            reveal
             blackReveal.style.display = "none";
 
-            // ⭐ DO NOT call initGame() here
-            // The game is already initialized
-            // The timer is already running
+            // ⭐ DO NOT call initGame() here — game is already running
         }
     }, 80);
 }
+
 
 const maze = [
   [1,1,1,1,1,1,1,1,1,1,1,1,1,1],
