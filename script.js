@@ -181,6 +181,9 @@ function startTileReveal() {
         if (remaining.length === 0) {
             clearInterval(interval);
             blackReveal.style.display = "none";
+
+            // ⭐ Timer starts AFTER reveal
+            startTimer();
         }
     }, 80);
 }
