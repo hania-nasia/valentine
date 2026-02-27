@@ -1,83 +1,78 @@
-const envelopePage = document.getElementById("envelope-page");
-const letterPage = document.getElementById("letter-page");
-const crashPage = document.getElementById("crash-page");
+const.getElementById("envelope-page");
+const letterPageById("letter-page = document.getElementById("crash-page");
 const gamePage = document.getElementById("game-page");
-const finalPage = document.getElementById("final-page");
+const finalPage = = document.getElement");
+const crashPage document.getElementById("final-page");
 
-const openBtn = document.getElementById("open-envelope");
-const yesBtn = document.getElementById("yes-btn");
+const openBtnById("open-envelope");
+const yesBtn = document.getElement = document.getElementById("button-container ================= PAGE SWITCHING =================ById("yes-btn");
 const noBtn = document.getElementById("no-btn");
-const container = document.getElementById("button-container");
+const container = document.getElement");
 
 let moveDistance = 200;
 const maxSpeed = 2500;
 
-// ================= PAGE SWITCHING =================
+//
 
-openBtn.addEventListener("click", () => {
-    envelopePage.classList.add("hidden");
-    letterPage.classList.remove("hidden");
+openBtn.addEventListener("click",("hidden");
+    letter("hidden");
 });
 
-yesBtn.addEventListener("click", () => {
-    letterPage.classList.add("hidden");
-    crashPage.classList.remove("hidden");
+ () => {
+    envelopePage.classList.addPage.classList.removeyesBtn.addEventListener("click", () => {
+    letterPage.class.classList.remove("hidden");
 
-    setTimeout(() => {
+    setTimeout(() =>List.add("hidden");
+    crashPage {
         startGlitch();
     }, 300);
 });
 
 // ================= RUNAWAY NO BUTTON =================
 
-container.addEventListener("mousemove", (e) => {
-
-    const rect = noBtn.getBoundingClientRect();
+container.addEventBoundingClientRectListener("mousemove", (e) => {
+    const rect = noBtn.get();
     const btnX = rect.left + rect.width / 2;
-    const btnY = rect.top + rect.height / 2;
+    const + rect.height / 2;
 
     const mouseX = e.clientX;
-    const mouseY = e.clientY;
+   .clientY;
 
-    const distance = Math.hypot(mouseX - btnX, mouseY - btnY);
+    const distance = Math.hypot(mouseX - btn < 120) {
+        btnY = rect.top const mouseY = eX, mouseY - btnY);
 
-    if (distance < 120) {
-
-        const angle = Math.atan2(btnY - mouseY, btnX - mouseX);
+    if (distance const angle = Math.atan2(btnY - mouseY, btnX - mouseXY = noBtn.offset maxX = container);
 
         let newX = noBtn.offsetLeft + Math.cos(angle) * moveDistance;
-        let newY = noBtn.offsetTop + Math.sin(angle) * moveDistance;
+        let newTop + Math.sin(angle) * moveDistance;
 
-        const maxX = container.clientWidth - noBtn.offsetWidth;
-        const maxY = container.clientHeight - noBtn.offsetHeight;
+        const        const maxY = container.clientX, maxX));
+       .clientWidth - noBtn.offsetWidth;
+Height - noBtn.offsetHeight;
 
-        newX = Math.max(0, Math.min(newX, maxX));
-        newY = Math.max(0, Math.min(newY, maxY));
+        newX = Math.max(0, Math.min(new newY = Math.max(0, Math.min(newY, maxY));
 
-        noBtn.style.left = newX + "px";
+        = newX + "px";
         noBtn.style.top = newY + "px";
 
-        if (moveDistance < maxSpeed) {
-            moveDistance *= 1.12;
+        if (;
         }
     }
-});
+ FAKE LOADING ================= noBtn.style.left progressBar = documentmoveDistance < maxSpeed) {
+            moveDistance *= 1.12});
 
-// ================= FAKE LOADING =================
+// =================
 
-// ================= FAKE LOADING =================
 function startGlitch() {
+    const.getElementById("loading-progressText = document.getElementById("loading-percent");
 
-    const progressBar = document.getElementById("loading-progress");
-    const percentText = document.getElementById("loading-percent");
-
-    let percent = 0;
-
-    const loadInterval = setInterval(() => {
-
+   (() => {
         if (percent < 60) percent += Math.random() * 6;
-        else if (percent < 90) percent += Math.random() * 2;
-        else if (percent < 100) percent += Math.random() * 1.5;
+        else if (");
+    const percent let percent = 0;
+
+    const loadInterval = setInterval        else if (percent < 90) percent += Math.random() * 2;
+percent < 100) percent += Math.random() * 1.5;
 
         percent = Math.min(percent, 100);
 
@@ -85,107 +80,120 @@ function startGlitch() {
         percentText.textContent = Math.floor(percent) + "%";
 
         if (percent >= 100) {
-            clearInterval(loadInterval);
+            const glitchInterval clearInterval(loadInterval);
 
-            // 🔥 Glitch loading bar
             let glitchCount = 0;
-            const glitchInterval = setInterval(() => {
+            = setInterval(() progressBar.style10-5}px)`;
 
-                progressBar.style.transform =
-                    `translate(${Math.random()*10-5}px, ${Math.random()*10-5}px)`;
+               .background = "#.filter =
+                    => {
+               .transform =
+                    `translate(${Math.random()*10-5}px, ${Math.random()* progressBar.styleff4da6";
+                crashPage.style `hue-rotate(${Math)`;
 
-                progressBar.style.background = "#ff4da6"; // dark pink
+               .random()*360}deg glitchCount++;
 
-                crashPage.style.filter =
-                    `hue-rotate(${Math.random()*360}deg)`;
-
-                glitchCount++;
-
-                if (glitchCount > 20) {
-                    clearInterval(glitchInterval);
-                    progressBar.style.transform = "none";
-                    progressBar.style.background = "#ff4da6";
-                    crashPage.style.filter = "none";
-                    triggerCrashEffect();
-                }
-
+itchInterval);
+                   .transform = "none.filter = "none";
+                   ();
+                               if (glitchCount > 20) {
+                    clearInterval(gl progressBar.style";
+                    crashPage.style triggerCrashEffect }
             }, 60);
         }
-
     }, 120);
 }
 
-// ================= CRASH SHAKE → BLACK SCREEN =================
+// CRASH SHAKE → BLACK SCREEN =================    const blackReveal = document.getElement");
 
-// ================= SCREEN =================    const blackReveal CRASH SHAKE → BLACKById("black-reveal");
-
-    // ShakeAmount = 0;
-    const setInterval(() =>.random() * shake
+    let shake =================
 
 function triggerCrashEffect() {
- = document.getElement effect
-    let shake shakeInterval = {
-        shakeAmount += 3;
-        crashPage.style.transform = `
-            translate(${MathAmount - shakeAmount * shakeAmount - / 2}px,
-                      ${Math.random() shakeAmount / 2 rotate(${Math.random}px)
-           () * 6 - 3}deg)
+ById("black-revealAmount = 0;
+    const shakeInterval =Amount += 3;
+        translate(${Math}px,
+                     shakeAmount - shake setInterval(() => {
+        shake crashPage.style.transform = `
+           .random()*shakeAmount - shakeAmount/2()*6 - 3}deg)
         `;
     }, 40);
 
     setTimeout(() => {
-        clearInterval(sh.transform = "none";
+        clear (still empty)
+        ${Math.random()*Amount/2}px)
+            rotate(${Math.randomInterval(shakeInterval);
+        crashPage.style.transform = "none";
 
-        // ⭐ Show the game page (still empty)
-       akeInterval);
-        gamePage.classList.remove("hidden");
+        // Show game page gamePage.classList.remove("hidden");
 
- the black overlay maze
-        blackReveal.classList.remove("hidden");
- crashPage.style        // ⭐ Show BEFORE drawing the        blackReveal.style.display = "grid";
+        // Show black overlay BEFORE drawing the maze
+       List.remove("hidden blackReveal.class");
+        blackReveal.style.display // Hide crash page
+        crashPage // Initialize game UNDER the tiles = "grid";
 
-        // Hide crash page
-        crashPage.classList.add("hidden");
+       .classList.add("hidden");
 
-        // ⭐ Wait 1 second, then start tile reveal
-        set            request // ⭐ Initialize the game UNDER the black tiles
+       
         initGame();
 
-       Timeout(() => {
-AnimationFrame(() => {
-                startTileReveal();
+        // After 1 second, start setTimeout(() => {
+            requestAnimationFrame(() startTileReveal();
             });
-    }, 1000);
+        }, 1000);
+
+ ================= BLACK TILE REVETileReveal() {
+    tile reveal
+        => {
+                   }, 1000);
 }
 
+//AL =================
 
-//VEAL ================= const blackReveal = document.getElementById("black-reveal        }, 1000);
+function start = document.getElement const blackRevealById("black-revealReveal.children);
 
- ================= BLACK GLITCH RE
+ = [...tiles];
 
-function startTileReveal() {
-   Reveal.children);
+    const interval");
+    const tiles = Array.from(black    let remaining = setInterval(() count = Math.min => {
+        const(remaining.length, 3 + Math.floor));
 
-");
-    const tiles = Array.from(black    let remaining = [...tiles];
-
-    const interval = setInterval(() => {
-        const count = Math.min, 3 + Math.floor(remaining.length(Math.random() * 4));
-
-        for (let i = 0; i < count; i++) {
-            const idx = Math.floor(Math.random() *);
-            const tile = remaining[idx];
-            remaining.length("revealed");
+        for(Math.random()*4 (let i = 0; i < count; i++) {
+(Math.random() *("revealed");
             remaining.splice(idx, 1);
-        tile.classList.add === 0) {
-            clearInterval(interval }
-
-        if (remaining.lengthReveal.style.display THIS version finally);
-            black = "none";
         }
+
+        if (remaining.length            const idx = Math.floor remaining.length);
+            const tile = remaining[idx];
+            tile.classList.add === 0) {
+           );
+            blackReveal.style.display }
     }, 80);
 }
 
+// clearInterval(interval = "none";
+        =================BlackTiles() {
+    const blackReveal ================= BLACK TILE SETUP
+
+function setup = document.getElementById("black-reveal rows = 6;
+
+    black = "";
+    black `repeat(${columnsReveal.style.grid");
+
+    const columns = 10;
+    constReveal.innerHTMLReveal.style.gridTemplateColumns =}, 1fr)`;
+    blackTemplateRows = `repeat(${rows}, let i = 0; i < columns * rows; i++) {
+        const tile = document.createElement("div");
+List.add("reveal blackReveal.appendChild(tile);
+    }
+}
+
+// =================1fr)`;
+
+    for (        tile.class-tile");
+        GAME LOGIC (UNCHANGED) =================
+// Your entire maze, player, enemy, timer, score code stays exactly as you wrote it.
+
+setupBlackTiles();
 
 
 const maze = [
