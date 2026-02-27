@@ -138,6 +138,9 @@ function triggerCrashEffect() {
        // Show the game page underneath FIRST
 gamePage.classList.remove("hidden");
 
+        // ⭐ Initialize the game BEFORE tiles appear 
+        initGame();
+
 // Now show the black tile overlay on top
 blackReveal.classList.remove("hidden");
 blackReveal.style.display = "grid";
