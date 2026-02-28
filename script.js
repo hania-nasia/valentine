@@ -322,6 +322,7 @@ function createUI() {
   gameContainer.appendChild(mazeWrapper);
 }
 // ================= MAZE =================
+// ================= MAZE =================
 function drawMaze() {
   const mazeWrapper = document.getElementById("maze-wrapper");
   maze.forEach((row, y) => {
@@ -340,16 +341,15 @@ function drawMaze() {
         const finishImg = document.createElement("img");
         finishImg.src = "images/me.png";
         finishImg.style.position = "absolute";
-        finishImg.style.width = spriteSize + "px";
-        finishImg.style.height = spriteSize + "px";
-        finishImg.style.left = x * tileSize + (tileSize - spriteSize)/2 + "px";
-        finishImg.style.top = y * tileSize + (tileSize - spriteSize)/2 + "px";
+        finishImg.style.width = tileSize + "px";   // fill the tile
+        finishImg.style.height = tileSize + "px";  // fill the tile
+        finishImg.style.left = x * tileSize + "px";
+        finishImg.style.top = y * tileSize + "px";
         mazeWrapper.appendChild(finishImg);
       }
     });
   });
 }
-
 // ================= PLAYER =================
 function createPlayer() {
   player = { x: 1, y: 1 };
