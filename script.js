@@ -240,8 +240,8 @@ const maze = [
 ];
 
 const gameContainer = document.getElementById("game");
-const tileSize = 50;  
-const wallThickness = 4; // thin, continuous walls
+const tileSize = 60;
+const wallThickness = 2; // thin, continuous walls
 const spriteSize = 40;
 const kissSize = 32;
 
@@ -282,6 +282,7 @@ function createUI() {
   uiContainer.style.width = maze[0].length * tileSize + "px";
   uiContainer.style.margin = "0 auto 10px auto";
 
+  // Score
   scoreEl = document.createElement("div");
   scoreEl.style.display = "flex";
   scoreEl.style.alignItems = "center";
@@ -298,6 +299,7 @@ function createUI() {
   scoreText.textContent = score;
   scoreEl.appendChild(scoreText);
 
+  // Timer
   timerEl = document.createElement("div");
   timerEl.textContent = `Time: ${timeLeft}s`;
   timerEl.style.fontWeight = "bold";
@@ -307,6 +309,7 @@ function createUI() {
   uiContainer.appendChild(timerEl);
   gameContainer.appendChild(uiContainer);
 
+  // Maze wrapper
   const mazeWrapper = document.createElement("div");
   mazeWrapper.id = "maze-wrapper";
   mazeWrapper.style.position = "relative";
@@ -324,15 +327,15 @@ function drawMaze() {
       if (cell === 1) {
         const wall = document.createElement("div");
         wall.style.position = "absolute";
-        wall.style.width = tileSize + "px";
-        wall.style.height = tileSize + "px";
         wall.style.left = x * tileSize + "px";
         wall.style.top = y * tileSize + "px";
+        wall.style.width = tileSize + "px";
+        wall.style.height = tileSize + "px";
+        wall.style.background = "none"; // transparent fill
         wall.style.boxSizing = "border-box";
-        wall.style.border = `${wallThickness}px solid #ff4da6`; // thin continuous wall
+        wall.style.border = `${wallThickness}px solid #ff4da6`; // thin, continuous border
         mazeWrapper.appendChild(wall);
       }
-
       if (cell === 2) {
         const finishImg = document.createElement("img");
         finishImg.src = "images/me.png";
