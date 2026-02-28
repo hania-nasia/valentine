@@ -188,14 +188,17 @@ function startTileReveal() {
         if (remaining.length === 0) {
             clearInterval(interval);
 
-            setTimeout(() => {
-                blackReveal.style.display = "none";
-                startTimer();
-            }, 400);
-        }
+     setTimeout(() => {
+     blackReveal.style.display = "none";
+
+    // Start everything AFTER reveal
+     startEnemy();
+     startTimer();
+
+     }, 400);
 
     }, 60);
-}
+
 
 // ================= BLACK TILE SETUP =================
 
