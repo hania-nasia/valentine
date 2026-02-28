@@ -163,23 +163,38 @@ function startTileReveal() {
     let remaining = [...tiles];
 
     const interval = setInterval(() => {
-        const count = Math.min(remaining.length, 3 + Math.floor(Math.random()*4));
+
+        const count = Math.min(
+            remaining.length,
+            2 + Math.floor(Math.random() * 6)
+        );
 
         for (let i = 0; i < count; i++) {
+
             const idx = Math.floor(Math.random() * remaining.length);
             const tile = remaining[idx];
-            tile.classList.add("revealed");
+
+            // Add glitch animation
+            tile.classList.add("glitching");
+
+            setTimeout(() => {
+                tile.classList.remove("glitching");
+                tile.classList.add("revealed");
+            }, 80 + Math.random() * 120);
+
             remaining.splice(idx, 1);
         }
 
         if (remaining.length === 0) {
             clearInterval(interval);
-            blackReveal.style.display = "none";
 
-            // ⭐ Timer starts AFTER reveal
-            startTimer();
+            setTimeout(() => {
+                blackReveal.style.display = "none";
+                startTimer();
+            }, 400);
         }
-    }, 80);
+
+    }, 60);
 }
 
 // ================= BLACK TILE SETUP =================
