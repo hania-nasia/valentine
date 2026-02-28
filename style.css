@@ -83,6 +83,10 @@ button {
     color: #ff4da6;
 }
 
+#crash-page h2 {
+    color: #ff4da6; /* same pink as maze walls and loading bar */
+}
+
 /* Glitch overlay */
 .glitch-overlay {
     position: absolute;
