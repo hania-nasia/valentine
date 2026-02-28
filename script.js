@@ -196,8 +196,10 @@ function startTileReveal() {
      startTimer();
 
      }, 400);
+        }
 
     }, 60);
+}
 
 
 // ================= BLACK TILE SETUP =================
