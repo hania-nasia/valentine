@@ -244,7 +244,7 @@ const maze = [
 
 const gameContainer = document.getElementById("game");
 const tileSize = 60;  
-const wallThickness = 4;
+const wallThickness = 2;
 const spriteSize = 40;
 const kissSize = 32;
 
