@@ -191,12 +191,19 @@ function startTileReveal() {
 function setupBlackTiles() {
     const blackReveal = document.getElementById("black-reveal");
 
-    const columns = 10;
-    const rows = 6;
+    const columns = 14;  // match maze width
+    const rows = 11;     // match maze height
 
-    blackReveal.innerHTML = "";
+    const width = columns * tileSize;
+    const height = rows * tileSize;
+
+    blackReveal.style.width = width + "px";
+    blackReveal.style.height = height + "px";
+    blackReveal.style.display = "grid";
     blackReveal.style.gridTemplateColumns = `repeat(${columns}, 1fr)`;
     blackReveal.style.gridTemplateRows = `repeat(${rows}, 1fr)`;
+
+    blackReveal.innerHTML = "";
 
     for (let i = 0; i < columns * rows; i++) {
         const tile = document.createElement("div");
