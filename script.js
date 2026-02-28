@@ -288,7 +288,7 @@ function createUI() {
 
   const kissIcon = document.createElement("img");
   kissIcon.src = "images/kiss.png";
-  kissIcon.style.height = "35px";
+  kissIcon.style.height = "50px";
   kissIcon.style.width = "auto";
   kissIcon.style.objectFit = "contain";
   kissIcon.style.marginRight = "5px";
