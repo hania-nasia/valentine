@@ -430,6 +430,7 @@ document.addEventListener("keydown", (e) => {
 });
 
 // ================= COLLISIONS =================
+// ================= COLLISIONS =================
 function checkCollisions() {
   kisses = kisses.filter(kiss => {
     if (kiss.x === player.x && kiss.y === player.y) {
@@ -443,16 +444,37 @@ function checkCollisions() {
     return true;
   });
 
+  // WIN CONDITION
   if (maze[player.y][player.x] === 2 && kisses.length === 0) {
-    playerEl.src = "images/us.png";
+    // Hide all other images
+    playerEl.style.display = "none";
+    document.querySelectorAll('#maze-wrapper img').forEach(img => {
+      if (img.src.includes('me.png')) {
+        img.style.display = "none";
+      }
+    });
+
+    // Show only the 'us' icon at player's position
+    const usImg = document.createElement("img");
+    usImg.src = "images/us.png";
+    usImg.style.position = "absolute";
+    usImg.style.width = tileSize + "px";
+    usImg.style.height = tileSize + "px";
+    usImg.style.left = player.x * tileSize + "px";
+    usImg.style.top = player.y * tileSize + "px";
+    usImg.style.objectFit = "contain";
+    document.getElementById("maze-wrapper").appendChild(usImg);
+
     clearInterval(enemyInterval);
     clearInterval(gameTimer);
+
     setTimeout(() => {
       gamePage.classList.add("hidden");
       finalPage.classList.remove("hidden");
     }, 1500);
   }
 
+  // ENEMY COLLISION
   if (enemy.x === player.x && enemy.y === player.y) {
     clearInterval(enemyInterval);
     clearInterval(gameTimer);
