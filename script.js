@@ -329,16 +329,16 @@ function drawMaze() {
   maze.forEach((row, y) => {
     row.forEach((cell, x) => {
 
-      if (cell === 1) {
-        const wall = document.createElement("div");
-        wall.style.position = "absolute";
-        wall.style.left = x * tileSize + "px";
-        wall.style.top = y * tileSize + "px";
-        wall.style.width = tileSize + "px";
-        wall.style.height = tileSize + "px";
-        wall.style.background = "#ff4da6";  // continuous solid wall
-        mazeWrapper.appendChild(wall);
-      }
+     if (cell === 1) {
+    const wall = document.createElement("div");
+    wall.style.position = "absolute";
+    wall.style.left = x * tileSize + 5 + "px";   // inset by 5px from left
+    wall.style.top = y * tileSize + 5 + "px";    // inset by 5px from top
+    wall.style.width = tileSize - 10 + "px";     // 10px thinner overall
+    wall.style.height = tileSize - 10 + "px";    // 10px thinner overall
+    wall.style.background = "#ff4da6";           // same pink
+    mazeWrapper.appendChild(wall);
+}
 
       if (cell === 2) {
         const finishImg = document.createElement("img");
