@@ -269,7 +269,6 @@ function initGame() {
   placeKisses();
   updatePlayer();
   updateEnemy();
-  startEnemy();
 }
 
 // ================= UI: SCORE + TIMER =================
