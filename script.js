@@ -240,7 +240,7 @@ const maze = [
 ];
 
 const gameContainer = document.getElementById("game");
-const tileSize = 60;      // larger tiles
+const tileSize = 60;     
 const spriteSize = 40;
 const kissSize = 32;
 
@@ -272,8 +272,7 @@ function initGame() {
   updateEnemy();
 }
 
-// ================= UI =================
-// ================= UI =================
+// ================= UI: SCORE + TIMER =================
 function createUI() {
   const uiContainer = document.createElement("div");
   uiContainer.style.display = "flex";
@@ -289,7 +288,7 @@ function createUI() {
 
   const kissIcon = document.createElement("img");
   kissIcon.src = "images/kiss.png";
-  kissIcon.style.height = "45px";       // smaller icon
+  kissIcon.style.height = "35px"; // your requested size
   kissIcon.style.width = "auto";
   kissIcon.style.objectFit = "contain";
   kissIcon.style.marginRight = "5px";
@@ -297,22 +296,23 @@ function createUI() {
 
   const scoreText = document.createElement("span");
   scoreText.textContent = score;
-  scoreText.style.fontSize = "25px";    // smaller font
+  scoreText.style.fontSize = "28px";  // matches your snippet
   scoreText.style.fontWeight = "bold";
-  scoreText.style.color = "#ff4da6";    // same color as timer
+  scoreText.style.color = "#ff4da6";  // matches timer color
   scoreEl.appendChild(scoreText);
 
   // Timer
   timerEl = document.createElement("div");
   timerEl.textContent = `Time: ${timeLeft}s`;
-  timerEl.style.fontSize = "16px";      // slightly smaller
+  timerEl.style.fontSize = "28px";   // matches score
   timerEl.style.fontWeight = "bold";
-  timerEl.style.color = "#ff4da6";      // pink color
+  timerEl.style.color = "#ff4da6";
 
   uiContainer.appendChild(scoreEl);
   uiContainer.appendChild(timerEl);
   gameContainer.appendChild(uiContainer);
 
+  // Maze wrapper
   const mazeWrapper = document.createElement("div");
   mazeWrapper.id = "maze-wrapper";
   mazeWrapper.style.position = "relative";
@@ -321,8 +321,8 @@ function createUI() {
   mazeWrapper.style.margin = "0 auto";
   gameContainer.appendChild(mazeWrapper);
 }
-// ================= MAZE =================
 
+// ================= MAZE =================
 function drawMaze() {
   const mazeWrapper = document.getElementById("maze-wrapper");
   maze.forEach((row, y) => {
@@ -334,7 +334,7 @@ function drawMaze() {
         wall.style.top = y * tileSize + "px";
         wall.style.width = tileSize + "px";
         wall.style.height = tileSize + "px";
-        wall.style.background = "#ff4da6"; // fully pink walls
+        wall.style.background = "#ff4da6";
         mazeWrapper.appendChild(wall);
       }
 
@@ -343,14 +343,13 @@ function drawMaze() {
         finishImg.src = "images/me.png";
         finishImg.style.position = "absolute";
 
-        // Slightly smaller than tile so it fits fully
-        const padding = 4; 
-        finishImg.style.width = (tileSize - padding*2) + "px";
-        finishImg.style.height = (tileSize - padding*2) + "px";
+        // Fit fully inside tile
+        finishImg.style.width = tileSize + "px";
+        finishImg.style.height = tileSize + "px";
+        finishImg.style.left = x * tileSize + "px";
+        finishImg.style.top = y * tileSize + "px";
+        finishImg.style.objectFit = "contain";
 
-        finishImg.style.left = x * tileSize + padding + "px";
-        finishImg.style.top = y * tileSize + padding + "px";
-        finishImg.style.objectFit = "contain";  // ensures the whole image is visible
         mazeWrapper.appendChild(finishImg);
       }
     });
