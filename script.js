@@ -142,10 +142,6 @@ function triggerCrashEffect() {
         // Initialize game
         initGame();
 
-        // Show black overlay ON TOP of game
-        const blackReveal = document.getElementById("black-reveal");
-        blackReveal.style.display = "grid";
-
         // Create tiles
         setupBlackTiles();
 
