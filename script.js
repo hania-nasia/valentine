@@ -215,8 +215,6 @@ function setupBlackTiles() {
 
 // (your maze, player, enemy, timer, score, etc. remain unchanged)
 
-setupBlackTiles();
-
 const maze = [
   [1,1,1,1,1,1,1,1,1,1,1,1,1,1],
   [1,0,0,0,0,1,0,0,0,0,0,0,0,1],
