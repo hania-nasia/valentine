@@ -328,16 +328,16 @@ function drawMaze() {
   const mazeWrapper = document.getElementById("maze-wrapper");
   maze.forEach((row, y) => {
     row.forEach((cell, x) => {
-     if (cell === 1) {
+  if (cell === 1) {
     const wall = document.createElement("div");
     wall.style.position = "absolute";
     wall.style.left = x * tileSize + "px";
     wall.style.top = y * tileSize + "px";
-    wall.style.width = (tileSize - wallThickness*2) + "px";  // <- adjust
-    wall.style.height = (tileSize - wallThickness*2) + "px"; // <- adjust
-    wall.style.background = "#ff4da6";
+    wall.style.width = tileSize + "px";   // keep full tile size
+    wall.style.height = tileSize + "px";  // keep full tile size
+    wall.style.background = "#ff4da6";    // optional, can be same as border
     wall.style.boxSizing = "border-box";
-    wall.style.border = `${wallThickness}px solid #ff4da6`;
+    wall.style.border = `${wallThickness}px solid #ff4da6`; // only thin this
     mazeWrapper.appendChild(wall);
 }
       if (cell === 2) {
