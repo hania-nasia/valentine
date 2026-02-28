@@ -240,8 +240,8 @@ const maze = [
 ];
 
 const gameContainer = document.getElementById("game");
-const tileSize = 27;  
-const wallThickness = 6; // thinner, continuous walls
+const tileSize = 50;  
+const wallThickness = 4; // thin, continuous walls
 const spriteSize = 40;
 const kissSize = 32;
 
@@ -328,8 +328,8 @@ function drawMaze() {
         wall.style.height = tileSize + "px";
         wall.style.left = x * tileSize + "px";
         wall.style.top = y * tileSize + "px";
-        wall.style.background = "#ff4da6";
         wall.style.boxSizing = "border-box";
+        wall.style.border = `${wallThickness}px solid #ff4da6`; // thin continuous wall
         mazeWrapper.appendChild(wall);
       }
 
@@ -337,10 +337,10 @@ function drawMaze() {
         const finishImg = document.createElement("img");
         finishImg.src = "images/me.png";
         finishImg.style.position = "absolute";
-        finishImg.style.width = tileSize + "px";
-        finishImg.style.height = tileSize + "px";
-        finishImg.style.left = x * tileSize + "px";
-        finishImg.style.top = y * tileSize + "px";
+        finishImg.style.width = spriteSize + "px";
+        finishImg.style.height = spriteSize + "px";
+        finishImg.style.left = x * tileSize + (tileSize - spriteSize)/2 + "px";
+        finishImg.style.top = y * tileSize + (tileSize - spriteSize)/2 + "px";
         mazeWrapper.appendChild(finishImg);
       }
     });
@@ -444,11 +444,7 @@ function checkCollisions() {
     }, 1500);
   }
 
-  // Adjusted collision to account for tileSize and spriteSize
-  if (
-    Math.abs(enemy.x - player.x) < 1 &&
-    Math.abs(enemy.y - player.y) < 1
-  ) {
+  if (enemy.x === player.x && enemy.y === player.y) {
     clearInterval(enemyInterval);
     clearInterval(gameTimer);
     initGame();
