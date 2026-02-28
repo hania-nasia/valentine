@@ -304,7 +304,7 @@ function createUI() {
   // Timer
   timerEl = document.createElement("div");
   timerEl.textContent = `Time: ${timeLeft}s`;
-  timerEl.style.fontSize = "28px";   // matches score
+  timerEl.style.fontSize = "20px";   // matches score
   timerEl.style.fontWeight = "bold";
   timerEl.style.color = "#ff4da6";
 
