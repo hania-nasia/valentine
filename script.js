@@ -294,8 +294,10 @@ function createUI() {
   kissIcon.style.marginRight = "5px";
   scoreEl.appendChild(kissIcon);
 
-  const scoreText = document.createElement("span");
+const scoreText = document.createElement("span");
   scoreText.textContent = score;
+  scoreText.style.fontSize = "28px";    // larger score font
+  scoreText.style.fontWeight = "bold";
   scoreEl.appendChild(scoreText);
 
   // Timer
