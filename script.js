@@ -148,7 +148,7 @@ function triggerCrashEffect() {
         // Wait 1 second before tiles start disappearing
         setTimeout(() => {
             startTileReveal();
-        }, 1000);
+        }, 2000);
 
     }, 1000);
 }
