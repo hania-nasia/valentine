@@ -137,6 +137,8 @@ function triggerCrashEffect() {
     blackReveal.classList.remove("hidden");
     blackReveal.style.display = "grid";
 
+    setupBlackTiles();
+
     // 2. HIDE CRASH PAGE
     crashPage.classList.add("hidden");
 
