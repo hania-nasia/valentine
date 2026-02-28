@@ -187,19 +187,14 @@ function startTileReveal() {
 function setupBlackTiles() {
     const blackReveal = document.getElementById("black-reveal");
 
-    const columns = 14;  // match maze width
-    const rows = 11;     // match maze height
+    const tileSize = 80; // bigger = chunkier glitch
+    const columns = Math.ceil(window.innerWidth / tileSize);
+    const rows = Math.ceil(window.innerHeight / tileSize);
 
-    const width = columns * tileSize;
-    const height = rows * tileSize;
-
-    blackReveal.style.width = width + "px";
-    blackReveal.style.height = height + "px";
+    blackReveal.innerHTML = "";
     blackReveal.style.display = "grid";
     blackReveal.style.gridTemplateColumns = `repeat(${columns}, 1fr)`;
     blackReveal.style.gridTemplateRows = `repeat(${rows}, 1fr)`;
-
-    blackReveal.innerHTML = "";
 
     for (let i = 0; i < columns * rows; i++) {
         const tile = document.createElement("div");
