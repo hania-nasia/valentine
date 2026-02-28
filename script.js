@@ -240,8 +240,7 @@ const maze = [
 ];
 
 const gameContainer = document.getElementById("game");
-const tileSize = 60;
-const wallThickness = 2; // thin, continuous walls
+const tileSize = 60;      // larger tiles
 const spriteSize = 40;
 const kissSize = 32;
 
@@ -273,7 +272,7 @@ function initGame() {
   updateEnemy();
 }
 
-// ================= UI: SCORE + TIMER =================
+// ================= UI =================
 function createUI() {
   const uiContainer = document.createElement("div");
   uiContainer.style.display = "flex";
@@ -309,7 +308,6 @@ function createUI() {
   uiContainer.appendChild(timerEl);
   gameContainer.appendChild(uiContainer);
 
-  // Maze wrapper
   const mazeWrapper = document.createElement("div");
   mazeWrapper.id = "maze-wrapper";
   mazeWrapper.style.position = "relative";
@@ -331,9 +329,7 @@ function drawMaze() {
         wall.style.top = y * tileSize + "px";
         wall.style.width = tileSize + "px";
         wall.style.height = tileSize + "px";
-        wall.style.background = "none"; // transparent fill
-        wall.style.boxSizing = "border-box";
-        wall.style.border = `${wallThickness}px solid #ff4da6`; // thin, continuous border
+        wall.style.background = "#ff4da6"; // fully pink walls
         mazeWrapper.appendChild(wall);
       }
       if (cell === 2) {
