@@ -324,23 +324,24 @@ function createUI() {
 }
 
 // ================= MAZE =================
-function drawMaze() {
+
+    function drawMaze() {
   const mazeWrapper = document.getElementById("maze-wrapper");
   maze.forEach((row, y) => {
     row.forEach((cell, x) => {
 
-        if (cell === 1) {
-    const wall = document.createElement("div");
-    wall.style.position = "absolute";
-    wall.style.left = x * tileSize + "px";
-    wall.style.top = y * tileSize + "px";
-    wall.style.width = tileSize + "px";   // full tile size
-    wall.style.height = tileSize + "px";  // full tile size
-    wall.style.background = "#ff4da6";    // filled solid pink
-    wall.style.boxSizing = "border-box";
-    mazeWrapper.appendChild(wall);
-}
-        
+      if (cell === 1) {
+        const wall = document.createElement("div");
+        wall.style.position = "absolute";
+        wall.style.width = tileSize / 2 + "px";
+        wall.style.height = tileSize / 2 + "px";
+        wall.style.left = x * tileSize + tileSize / 4 + "px";
+        wall.style.top = y * tileSize + tileSize / 4 + "px";
+        wall.style.background = "#ff4da6";
+        wall.style.boxSizing = "border-box";
+        mazeWrapper.appendChild(wall);
+      }
+
       if (cell === 2) {
         const finishImg = document.createElement("img");
         finishImg.src = "images/me.png";
