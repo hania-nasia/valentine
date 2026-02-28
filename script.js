@@ -115,8 +115,8 @@ function startGlitch() {
 
 // ================= CRASH SHAKE → BLACK SCREEN =================
 function triggerCrashEffect() {
-    const blackReveal = document.getElementById("black-reveal");
 
+    // Shake crash page
     let shakeAmount = 0;
 
     const shakeInterval = setInterval(() => {
@@ -128,27 +128,28 @@ function triggerCrashEffect() {
         `;
     }, 40);
 
-    // Shake for 1 second
     setTimeout(() => {
 
         clearInterval(shakeInterval);
         crashPage.style.transform = "none";
 
-        // 1️⃣ Show full black screen instantly
-        blackReveal.classList.remove("hidden");
-        blackReveal.style.display = "grid";
-
-        // 2️⃣ Create tiles
-        setupBlackTiles();
-
-        // 3️⃣ Hide crash page completely
+        // Hide crash page completely
         crashPage.classList.add("hidden");
 
-        // 4️⃣ Prepare game UNDER the black screen
+        // Show game page
         gamePage.classList.remove("hidden");
+
+        // Initialize game
         initGame();
 
-        // 5️⃣ Wait 1 full second before tiles start disappearing
+        // Show black overlay ON TOP of game
+        const blackReveal = document.getElementById("black-reveal");
+        blackReveal.style.display = "grid";
+
+        // Create tiles
+        setupBlackTiles();
+
+        // Wait 1 second before tiles start disappearing
         setTimeout(() => {
             startTileReveal();
         }, 1000);
