@@ -323,6 +323,8 @@ function createUI() {
 }
 // ================= MAZE =================
 // ================= MAZE =================
+
+// ================= MAZE =================
 function drawMaze() {
   const mazeWrapper = document.getElementById("maze-wrapper");
   maze.forEach((row, y) => {
@@ -341,10 +343,12 @@ function drawMaze() {
         const finishImg = document.createElement("img");
         finishImg.src = "images/me.png";
         finishImg.style.position = "absolute";
-        finishImg.style.width = tileSize + "px";   // fill the tile
-        finishImg.style.height = tileSize + "px";  // fill the tile
+        finishImg.style.width = tileSize + "px";
+        finishImg.style.height = tileSize + "px";
         finishImg.style.left = x * tileSize + "px";
         finishImg.style.top = y * tileSize + "px";
+        finishImg.style.objectFit = "contain";  // ensures the whole image is visible
+        finishImg.style.pointerEvents = "none"; // optional, avoids accidental clicks
         mazeWrapper.appendChild(finishImg);
       }
     });
