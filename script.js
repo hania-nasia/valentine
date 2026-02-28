@@ -224,9 +224,6 @@ function setupBlackTiles() {
 }
 
 // ================= GAME LOGIC (UNCHANGED) =================
-// ⭐ Everything below here is EXACTLY your original code ⭐
-
-// (your maze, player, enemy, timer, score, etc. remain unchanged)
 
 const maze = [
   [1,1,1,1,1,1,1,1,1,1,1,1,1,1],
@@ -244,7 +241,7 @@ const maze = [
 
 const gameContainer = document.getElementById("game");
 const tileSize = 27;  
-const wallThickness = 1;
+const wallThickness = 6; // thinner, continuous walls
 const spriteSize = 40;
 const kissSize = 32;
 
@@ -285,7 +282,6 @@ function createUI() {
   uiContainer.style.width = maze[0].length * tileSize + "px";
   uiContainer.style.margin = "0 auto 10px auto";
 
-  // Score
   scoreEl = document.createElement("div");
   scoreEl.style.display = "flex";
   scoreEl.style.alignItems = "center";
@@ -302,7 +298,6 @@ function createUI() {
   scoreText.textContent = score;
   scoreEl.appendChild(scoreText);
 
-  // Timer
   timerEl = document.createElement("div");
   timerEl.textContent = `Time: ${timeLeft}s`;
   timerEl.style.fontWeight = "bold";
@@ -310,10 +305,8 @@ function createUI() {
 
   uiContainer.appendChild(scoreEl);
   uiContainer.appendChild(timerEl);
-
   gameContainer.appendChild(uiContainer);
 
-  // Maze wrapper
   const mazeWrapper = document.createElement("div");
   mazeWrapper.id = "maze-wrapper";
   mazeWrapper.style.position = "relative";
@@ -324,19 +317,17 @@ function createUI() {
 }
 
 // ================= MAZE =================
-
-    function drawMaze() {
+function drawMaze() {
   const mazeWrapper = document.getElementById("maze-wrapper");
   maze.forEach((row, y) => {
     row.forEach((cell, x) => {
-
       if (cell === 1) {
         const wall = document.createElement("div");
         wall.style.position = "absolute";
-        wall.style.width = tileSize / 2 + "px";
-        wall.style.height = tileSize / 2 + "px";
-        wall.style.left = x * tileSize + tileSize / 4 + "px";
-        wall.style.top = y * tileSize + tileSize / 4 + "px";
+        wall.style.width = tileSize + "px";
+        wall.style.height = tileSize + "px";
+        wall.style.left = x * tileSize + "px";
+        wall.style.top = y * tileSize + "px";
         wall.style.background = "#ff4da6";
         wall.style.boxSizing = "border-box";
         mazeWrapper.appendChild(wall);
@@ -453,7 +444,11 @@ function checkCollisions() {
     }, 1500);
   }
 
-  if (enemy.x === player.x && enemy.y === player.y) {
+  // Adjusted collision to account for tileSize and spriteSize
+  if (
+    Math.abs(enemy.x - player.x) < 1 &&
+    Math.abs(enemy.y - player.y) < 1
+  ) {
     clearInterval(enemyInterval);
     clearInterval(gameTimer);
     initGame();
