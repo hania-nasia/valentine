@@ -114,12 +114,11 @@ function startGlitch() {
 }
 
 // ================= CRASH SHAKE → BLACK SCREEN =================
-// ⭐ FIXED VERSION ⭐
-
 function triggerCrashEffect() {
     const blackReveal = document.getElementById("black-reveal");
 
     let shakeAmount = 0;
+
     const shakeInterval = setInterval(() => {
         shakeAmount += 3;
         crashPage.style.transform = `
@@ -129,38 +128,33 @@ function triggerCrashEffect() {
         `;
     }, 40);
 
- setTimeout(() => {
-    clearInterval(shakeInterval);
-    crashPage.style.transform = "none";
-
-    // 1. SHOW FULL BLACK SCREEN FIRST
-    blackReveal.classList.remove("hidden");
-    blackReveal.style.display = "grid";
-
-    setupBlackTiles();
-
-    // 2. HIDE CRASH PAGE
-    crashPage.classList.add("hidden");
-
-    // 3. WAIT A MOMENT SO BLACK SCREEN IS VISIBLE
+    // Shake for 1 second
     setTimeout(() => {
 
-        // 4. SHOW GAME PAGE UNDER THE BLACK TILES
-        gamePage.classList.remove("hidden");
+        clearInterval(shakeInterval);
+        crashPage.style.transform = "none";
 
-        // 5. INITIALIZE GAME UNDER THE BLACK TILES
+        // 1️⃣ Show full black screen instantly
+        blackReveal.classList.remove("hidden");
+        blackReveal.style.display = "grid";
+
+        // 2️⃣ Create tiles
+        setupBlackTiles();
+
+        // 3️⃣ Hide crash page completely
+        crashPage.classList.add("hidden");
+
+        // 4️⃣ Prepare game UNDER the black screen
+        gamePage.classList.remove("hidden");
         initGame();
 
-        // 6. START TILE REVEAL AFTER GAME IS READY
+        // 5️⃣ Wait 1 full second before tiles start disappearing
         setTimeout(() => {
             startTileReveal();
-        }, 500);
+        }, 1000);
 
-    }, 200);
-
-}, 1000);
+    }, 1000);
 }
-
 
 // ================= BLACK TILE REVEAL =================
 // ⭐ FIXED VERSION ⭐
