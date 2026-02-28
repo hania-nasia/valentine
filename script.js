@@ -289,7 +289,7 @@ function createUI() {
 
   const kissIcon = document.createElement("img");
   kissIcon.src = "images/kiss.png";
-  kissIcon.style.height = "35px";       // smaller icon
+  kissIcon.style.height = "45px";       // smaller icon
   kissIcon.style.width = "auto";
   kissIcon.style.objectFit = "contain";
   kissIcon.style.marginRight = "5px";
@@ -297,7 +297,7 @@ function createUI() {
 
   const scoreText = document.createElement("span");
   scoreText.textContent = score;
-  scoreText.style.fontSize = "18px";    // smaller font
+  scoreText.style.fontSize = "30px";    // smaller font
   scoreText.style.fontWeight = "bold";
   scoreText.style.color = "#ff4da6";    // same color as timer
   scoreEl.appendChild(scoreText);
@@ -305,7 +305,7 @@ function createUI() {
   // Timer
   timerEl = document.createElement("div");
   timerEl.textContent = `Time: ${timeLeft}s`;
-  timerEl.style.fontSize = "18px";      // slightly smaller
+  timerEl.style.fontSize = "30px";      // slightly smaller
   timerEl.style.fontWeight = "bold";
   timerEl.style.color = "#ff4da6";      // pink color
 
