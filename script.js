@@ -305,7 +305,7 @@ function createUI() {
   // Timer
   timerEl = document.createElement("div");
   timerEl.textContent = `Time: ${timeLeft}s`;
-  timerEl.style.fontSize = "25px";      // slightly smaller
+  timerEl.style.fontSize = "20px";      // slightly smaller
   timerEl.style.fontWeight = "bold";
   timerEl.style.color = "#ff4da6";      // pink color
 
