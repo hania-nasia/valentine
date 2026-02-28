@@ -328,18 +328,18 @@ function drawMaze() {
   const mazeWrapper = document.getElementById("maze-wrapper");
   maze.forEach((row, y) => {
     row.forEach((cell, x) => {
-      if (cell === 1) {
-        const wall = document.createElement("div");
-        wall.style.position = "absolute";
-        wall.style.left = x * tileSize + "px";
-        wall.style.top = y * tileSize + "px";
-        wall.style.width = tileSize + "px";
-        wall.style.height = tileSize + "px";
-        wall.style.background = "transparent";          // remove solid fill
-        wall.style.boxSizing = "border-box";
-        wall.style.border = `${wallThickness}px solid #ff4da6`; // thin border
-        mazeWrapper.appendChild(wall);
-      }
+     if (cell === 1) {
+    const wall = document.createElement("div");
+    const inset = 5; // how much smaller you want the walls to be
+    wall.style.position = "absolute";
+    wall.style.left = x * tileSize + inset + "px";
+    wall.style.top = y * tileSize + inset + "px";
+    wall.style.width = tileSize - inset*2 + "px";   // shrink width
+    wall.style.height = tileSize - inset*2 + "px";  // shrink height
+    wall.style.background = "#ff4da6";              // keep filled
+    wall.style.boxSizing = "border-box";
+    mazeWrapper.appendChild(wall);
+}
 
       if (cell === 2) {
         const finishImg = document.createElement("img");
