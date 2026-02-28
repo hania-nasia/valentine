@@ -322,9 +322,7 @@ function createUI() {
   gameContainer.appendChild(mazeWrapper);
 }
 // ================= MAZE =================
-// ================= MAZE =================
 
-// ================= MAZE =================
 function drawMaze() {
   const mazeWrapper = document.getElementById("maze-wrapper");
   maze.forEach((row, y) => {
@@ -339,21 +337,26 @@ function drawMaze() {
         wall.style.background = "#ff4da6"; // fully pink walls
         mazeWrapper.appendChild(wall);
       }
+
       if (cell === 2) {
         const finishImg = document.createElement("img");
         finishImg.src = "images/me.png";
         finishImg.style.position = "absolute";
-        finishImg.style.width = tileSize + "px";
-        finishImg.style.height = tileSize + "px";
-        finishImg.style.left = x * tileSize + "px";
-        finishImg.style.top = y * tileSize + "px";
+
+        // Slightly smaller than tile so it fits fully
+        const padding = 4; 
+        finishImg.style.width = (tileSize - padding*2) + "px";
+        finishImg.style.height = (tileSize - padding*2) + "px";
+
+        finishImg.style.left = x * tileSize + padding + "px";
+        finishImg.style.top = y * tileSize + padding + "px";
         finishImg.style.objectFit = "contain";  // ensures the whole image is visible
-        finishImg.style.pointerEvents = "none"; // optional, avoids accidental clicks
         mazeWrapper.appendChild(finishImg);
       }
     });
   });
 }
+
 // ================= PLAYER =================
 function createPlayer() {
   player = { x: 1, y: 1 };
