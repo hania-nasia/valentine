@@ -125,9 +125,41 @@ body, html {
     height: 100%;
     background: black;
     opacity: 1;
-    transition: opacity 0.35s ease;
+    transform: scale(1);
+    transition: 
+        opacity 0.35s ease,
+        transform 0.15s ease,
+        filter 0.15s ease;
 }
 
 .reveal-tile.revealed {
     opacity: 0;
+    transform: scale(1.2);
+}
+
+.reveal-tile.glitching {
+    animation: tileGlitch 0.15s infinite;
+}
+
+@keyframes tileGlitch {
+    0% {
+        transform: translate(0px, 0px);
+        filter: hue-rotate(0deg);
+    }
+    25% {
+        transform: translate(-3px, 2px);
+        filter: hue-rotate(90deg);
+    }
+    50% {
+        transform: translate(3px, -2px);
+        filter: hue-rotate(180deg);
+    }
+    75% {
+        transform: translate(-2px, -3px);
+        filter: hue-rotate(270deg);
+    }
+    100% {
+        transform: translate(0px, 0px);
+        filter: hue-rotate(360deg);
+    }
 }
