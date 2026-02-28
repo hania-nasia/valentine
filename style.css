@@ -110,7 +110,7 @@ button {
     background: black;
     z-index: 20000;
     pointer-events: none;
-    display: grid;
+    display: none;
 }
 
 
@@ -121,6 +121,8 @@ body, html {
 }
 
 .reveal-tile {
+    width: 100%;
+    height: 100%;
     background: black;
     opacity: 1;
     transition: opacity 0.2s ease;
